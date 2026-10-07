@@ -10,6 +10,7 @@
 | `supabase/functions/moyasar-verify` | التحقق من الدفع وتفعيل الاشتراك (عند تفعيل Moyasar) |
 | `supabase/functions/send-reminders` | تذكير بريدي تلقائي بالجلسات (اختياري) |
 
+
 ## النشر بالترتيب
 1. **قاعدة البيانات:** Supabase ← SQL Editor ← نفّذ الملفات الثلاثة في `sql/` بترتيب أرقامها، كلاً في استعلام مستقل.
 2. **البريد:** Authentication ← Providers ← Email ← فعّل **Confirm email**.
