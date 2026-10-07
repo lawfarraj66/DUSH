@@ -63,34 +63,12 @@ header button#bell{position:relative}.bc{position:absolute;top:-6px;left:-6px;ba
 }
 @media print{#bnr,#nf{display:none!important}}
 @media(max-width:760px){#add2{top:auto!important;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:16px;border-radius:99px;padding:12px 20px}main{padding-bottom:84px}}
-
-/* ===== v4: شريط علوي بنمط Odoo بدل الشريط الجانبي ===== */
-#sb{display:none!important}#mn{margin:0!important}#bm{display:none!important}
-header{background:var(--sb);color:#fff;border:0;position:sticky;top:0;z-index:7;box-shadow:0 2px 10px #0003}
-header h1{font-size:16px;color:#fff;margin-inline-start:6px}
-header button.g{color:#fff;border-color:#ffffff30}
-header .nvl,header .nvr{display:flex;align-items:center;gap:6px;position:relative}
-.nvb{background:#ffffff1f;color:#fff;font-size:18px;padding:6px 12px}
-header #gs{background:#ffffff1a;border-color:#ffffff2a;color:#fff}header #gs::placeholder{color:#b9c4dc}#gr{color:var(--tx)}
-#mbar{display:flex;gap:2px;align-items:center;overflow-x:auto;white-space:nowrap;background:var(--card);border-bottom:1px solid var(--bd);padding:0 12px}
-#mbar a{padding:11px 12px;color:var(--tx);cursor:pointer;border-bottom:2px solid transparent;flex:none}
-#mbar a:hover{background:color-mix(in srgb,var(--pr) 8%,transparent)}
-#mbar a.on{color:var(--pr);border-color:var(--pr);font-weight:700}
-#mbar .mt{color:var(--pr);padding:0 6px 0 14px;margin-inline-end:6px;border-inline-end:1px solid var(--bd);flex:none}
-#mbar .ms{color:var(--mu);font-size:11px;padding:0 8px;font-style:normal;flex:none}#mbar .mh{font-size:18px}
-#umm{display:none;position:absolute;top:calc(100% + 8px);left:0;min-width:230px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 30px #0006;z-index:20;padding:6px}
-#umm.o{display:block}#umm .uh{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--bd);margin-bottom:4px}
-#umm .uh i{width:34px;height:34px;border-radius:50%;background:var(--pr);color:#fff;display:grid;place-items:center;font-style:normal;font-weight:700}
-#umm a{display:block;padding:9px 12px;border-radius:8px;cursor:pointer}#umm a:hover{background:var(--bg)}
-.apk{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:0 auto 22px;max-width:760px}
-.apk span{background:var(--card);border:1px solid var(--bd);border-radius:99px;padding:6px 14px;font-size:13px}
-.apk span b{color:var(--pr)}
 </style>
 </head>
 <body>
-<nav id="sb" hidden></nav>
+<nav id="sb"></nav>
 <div id="mn">
-<header><div><button class="nvb" id="apb" title="التطبيقات">⊞</button> <h1 id="ttl"></h1></div><div style="position:relative;flex:1;max-width:380px"><input id="gs" placeholder="ابحث في العملاء، القضايا، المهام…" autocomplete="off"><div id="gr"></div></div><div><button class="g" id="bell" title="التنبيهات">🔔<span id="bc" class="bc" style="display:none"></span></button> <button class="g" id="tm">⏱ مؤقت</button> <button class="g" id="th">🌓</button> <button id="add">+ إضافة</button> <button class="g" id="um" title="حسابي">👤</button><div id="umm"></div></div></header>
+<header><div><button class="g" id="bm">☰</button> <button class="g" id="apb" title="التطبيقات">⊞</button> <h1 id="ttl"></h1></div><div style="position:relative;flex:1;max-width:380px"><input id="gs" placeholder="ابحث في العملاء، القضايا، المهام…" autocomplete="off"><div id="gr"></div></div><div><button class="g" id="bell" title="التنبيهات">🔔<span id="bc" class="bc" style="display:none"></span></button> <button class="g" id="tm">⏱ مؤقت</button> <button class="g" id="th">🌓</button> <button id="add">+ إضافة</button></div></header>
 <main id="ct"></main>
 </div>
 <dialog id="dg"><form id="fm" method="dialog"><h3 id="dt" style="margin:0"></h3><div id="ff"></div><div class="act"><button type="submit">حفظ</button><button type="button" class="g" id="cx">إلغاء</button></div></form></dialog>
@@ -183,53 +161,41 @@ const css=`#au{position:fixed;inset:0;z-index:50;display:grid;place-items:center
 #au .er{color:var(--er);font-size:13px;margin-top:8px;min-height:18px}#au .ok{color:var(--pr);font-size:13px;margin-top:8px}
 #au a{color:var(--pr);cursor:pointer;font-size:13px}#au button.mx{width:100%;margin-top:12px;padding:11px}`;
 const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-const ar=m=>({"Invalid login credentials":"رقم الجوال أو كلمة المرور غير صحيحة","Phone not confirmed":"لم يتم تأكيد رقم الجوال بعد — أدخل رمز التحقق","Email not confirmed":"لم يتم تأكيد الحساب بعد","User already registered":"هذا الرقم مسجّل مسبقاً — سجّل الدخول","Password should be at least 6 characters.":"كلمة المرور يجب ألا تقل عن 6 أحرف","Token has expired or is invalid":"رمز التحقق خاطئ أو منتهي","Phone signups are disabled":"التسجيل بالجوال غير مفعّل — فعّل Phone من Supabase ← Authentication ← Providers","Unsupported phone provider":"خدمة الرسائل النصية غير مفعّلة في Supabase","Error sending sms":"تعذّر إرسال الرمز — تحقق من إعدادات مزوّد الرسائل"}[m]||(/rate limit|security purposes/i.test(m||"")?"محاولات كثيرة — انتظر دقيقة ثم أعد المحاولة":m));
-/* توحيد رقم الجوال إلى الصيغة الدولية: 05xxxxxxxx / 5xxxxxxxx / 9665xxxxxxxx / +… */
-const ph=raw=>{let t=String(raw||"").replace(/[\s\-()]/g,"").replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));if(t.startsWith("00"))t="+"+t.slice(2);
- if(/^05\d{8}$/.test(t))return"+966"+t.slice(1);if(/^5\d{8}$/.test(t))return"+966"+t;if(/^9665\d{8}$/.test(t))return"+"+t;if(/^\+\d{9,15}$/.test(t))return t;return null};
-function show(mode="in"){return new Promise(res=>{let d=document.getElementById("au");if(!d){d=document.createElement("div");d.id="au";document.body.appendChild(d)}let pend=null;
- const draw=()=>{const up=mode==="up",rs=mode==="rs",ot=mode==="ot",em=mode==="em";
- d.innerHTML=`<div class="bx"><h2>⚖ نظام إدارة مكتب المحاماة</h2><p>${ot?"أدخل رمز التحقق المرسل إلى جوالك":rs?"استعادة كلمة المرور — سيصلك رمز على جوالك":up?"أنشئ حساب مكتبك برقم جوالك":em?"دخول الحسابات القديمة بالبريد الإلكتروني":"سجّل الدخول برقم جوالك"}</p>
- ${rs||ot||em?"":`<div class="tb"><button class="${up?"g":""}" data-m="in">دخول</button><button class="${up?"":"g"}" data-m="up">حساب جديد</button></div>`}
+const ar=m=>({"Invalid login credentials":"البريد أو كلمة المرور غير صحيحة","Email not confirmed":"لم يتم تأكيد البريد بعد — افتح الرسالة المرسلة إليك","User already registered":"هذا البريد مسجّل مسبقاً","Password should be at least 6 characters.":"كلمة المرور يجب ألا تقل عن 6 أحرف"}[m]||m);
+function show(mode="in"){return new Promise(res=>{let d=document.getElementById("au");if(!d){d=document.createElement("div");d.id="au";document.body.appendChild(d)}
+ const draw=()=>{const up=mode==="up",rs=mode==="rs";
+ d.innerHTML=`<div class="bx"><h2>⚖ نظام إدارة مكتب المحاماة</h2><p>${rs?"استعادة كلمة المرور":up?"أنشئ حساب مكتبك — تجربة مجانية 14 يوماً بدون بطاقة بنكية":"سجّل الدخول إلى حساب مكتبك"}</p>
+ ${rs?"":`<div class="tb"><button class="${up?"g":""}" data-m="in">دخول</button><button class="${up?"":"g"}" data-m="up">حساب جديد</button></div>`}
  ${up?`<label>اسم المكتب</label><input id="au_o" autocomplete="organization"><label>اسمك الكامل</label><input id="au_n" autocomplete="name">`:""}
- ${ot?`<label>رمز التحقق</label><input id="au_c" dir="ltr" inputmode="numeric" autocomplete="one-time-code" maxlength="8">`:em?`<label>البريد الإلكتروني</label><input id="au_e" type="email" dir="ltr" autocomplete="email">`:`<label>رقم الجوال</label><input id="au_e" type="tel" dir="ltr" inputmode="tel" autocomplete="tel" placeholder="05xxxxxxxx">`}
- ${rs||ot?"":`<label>كلمة المرور</label><input id="au_p" type="password" dir="ltr" autocomplete="${up?"new-password":"current-password"}">`}
- <button class="mx" id="au_go">${ot?"تأكيد":rs?"أرسل الرمز":up?"إنشاء الحساب":"دخول"}</button>
+ <label>البريد الإلكتروني</label><input id="au_e" type="email" dir="ltr" autocomplete="email">
+ ${rs?"":`<label>كلمة المرور</label><input id="au_p" type="password" dir="ltr" autocomplete="${up?"new-password":"current-password"}">`}
+ <button class="mx" id="au_go">${rs?"أرسل رابط الاستعادة":up?"إنشاء الحساب":"دخول"}</button>
  <div class="er" id="au_er"></div>
- <div style="margin-top:8px;display:flex;gap:14px;flex-wrap:wrap">${ot?'<a data-rsend="1">إعادة إرسال الرمز</a><a data-m="in">رجوع</a>':rs||em?'<a data-m="in">العودة لتسجيل الدخول</a>':up?"":'<a data-m="rs">نسيت كلمة المرور؟</a><a data-m="em">حساب قديم بالبريد؟</a>'}</div>
- ${up?'<p style="margin-top:10px;font-size:12px">إذا دعاك مدير مكتب، سجّل بنفس رقم الجوال الذي دعاك عليه وستنضم لمكتبه تلقائياً.</p>':""}</div>`;
+ <div style="margin-top:8px">${rs?'<a data-m="in">العودة لتسجيل الدخول</a>':up?"":'<a data-m="rs">نسيت كلمة المرور؟</a>'}</div>
+ ${up?'<p style="margin-top:10px;font-size:12px">إذا دعاك مدير مكتب، سجّل بنفس البريد الذي دعاك عليه وستنضم لمكتبه تلقائياً.</p>':""}</div>`;
  d.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw()});
  const E=document.getElementById("au_er"),v=i=>(document.getElementById(i)?.value||"").trim(),go=document.getElementById("au_go");
- const rsb=d.querySelector("[data-rsend]");if(rsb)rsb.onclick=async()=>{E.className="er";E.textContent="";try{const r=pend.kind==="rs"?await sb.auth.signInWithOtp({phone:pend.phone,options:{shouldCreateUser:false}}):await sb.auth.resend({type:"sms",phone:pend.phone});if(r.error)throw r.error;E.className="ok";E.textContent="أُعيد إرسال الرمز"}catch(e){E.textContent=ar(e.message||"حدث خطأ")}};
- const run=async()=>{E.className="er";E.textContent="";go.disabled=true;
-  try{
-   if(ot){const tk=v("au_c");if(!tk)throw{message:"اكتب رمز التحقق"};const{error}=await sb.auth.verifyOtp({phone:pend.phone,token:tk,type:"sms"});if(error)throw error;
-    d.remove();if(pend.kind==="rs")await recovery();res();return}
-   if(em){const email=v("au_e"),pw=document.getElementById("au_p")?.value||"";if(!email)throw{message:"اكتب البريد الإلكتروني"};const{error}=await sb.auth.signInWithPassword({email,password:pw});if(error)throw error;d.remove();res();return}
-   const phone=ph(v("au_e"));if(!phone)throw{message:"اكتب رقم جوال صحيحاً (مثال: 0501234567)"};
-   const pw=document.getElementById("au_p")?.value||"";
-   if(rs){const{error}=await sb.auth.signInWithOtp({phone,options:{shouldCreateUser:false}});if(error)throw error;pend={phone,kind:"rs"};mode="ot";draw();return}
-   if(up){if(!v("au_o"))throw{message:"اكتب اسم المكتب"};if(pw.length<8)throw{message:"كلمة المرور يجب ألا تقل عن 8 أحرف"};
-    const{data,error}=await sb.auth.signUp({phone,password:pw,options:{data:{full_name:v("au_n"),office_name:v("au_o")}}});if(error)throw error;
-    if(data.session){d.remove();res();return}pend={phone,kind:"up"};mode="ot";draw();return}
-   const{error}=await sb.auth.signInWithPassword({phone,password:pw});if(error)throw error;d.remove();res();return}
+ const run=async()=>{E.className="er";E.textContent="";const email=v("au_e"),pw=document.getElementById("au_p")?.value||"";if(!email)return E.textContent="اكتب البريد الإلكتروني";go.disabled=true;
+  try{if(rs){const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;E.className="ok";E.textContent="أُرسل رابط الاستعادة إلى بريدك"}
+  else if(up){if(!v("au_o"))throw{message:"اكتب اسم المكتب"};if(pw.length<8)throw{message:"كلمة المرور يجب ألا تقل عن 8 أحرف"};
+   const{data,error}=await sb.auth.signUp({email,password:pw,options:{data:{full_name:v("au_n"),office_name:v("au_o")}}});if(error)throw error;
+   if(data.session){d.remove();res()}else{E.className="ok";E.textContent="تم إنشاء الحساب — أكّد بريدك الإلكتروني من الرسالة المرسلة ثم سجّل الدخول"}}
+  else{const{error}=await sb.auth.signInWithPassword({email,password:pw});if(error)throw error;d.remove();res()}}
   catch(e){E.textContent=ar(e.message||"حدث خطأ")}go.disabled=false};
  go.onclick=run;d.querySelectorAll("input").forEach(i=>i.onkeydown=e=>{if(e.key==="Enter")run()})};draw()})}
 function recovery(){return new Promise(res=>{const d=document.createElement("div");d.id="au";d.innerHTML=`<div class="bx"><h2>كلمة مرور جديدة</h2><label>كلمة المرور الجديدة</label><input id="np" type="password" dir="ltr"><button class="mx" id="npg">حفظ</button><div class="er" id="npe"></div></div>`;document.body.appendChild(d);
  document.getElementById("npg").onclick=async()=>{const p=document.getElementById("np").value;if(p.length<8)return document.getElementById("npe").textContent="8 أحرف على الأقل";const{error}=await sb.auth.updateUser({password:p});if(error)return document.getElementById("npe").textContent=error.message;d.remove();res()}})}
 function msg(t,btn){const d=document.createElement("div");d.id="au";d.innerHTML=`<div class="bx"><h2>⚖</h2><p style="font-size:14px;color:var(--tx)">${t}</p>${btn?`<button class="mx" id="aub">${btn}</button>`:""}<button class="mx g" id="auo">تسجيل الخروج</button></div>`;document.body.appendChild(d);
  document.getElementById("auo").onclick=async()=>{await sb.auth.signOut();location.reload()};return d}
-return{show,recovery,msg,ph}})();
+return{show,recovery,msg}})();
 /* ==================== الإقلاع ==================== */
 const loadScript=u=>new Promise((o,e)=>{const s=document.createElement("script");s.src=u;s.onload=o;s.onerror=()=>e(new Error(u));document.head.appendChild(s)});
 async function enter(){
  const{data:{user}}=await sb.auth.getUser();CTX.user=user;
  const{data:mb,error}=await sb.from("members").select("role,status,full_name,org:organizations(*)").eq("user_id",user.id).maybeSingle();
- if(error||!mb||!mb.org){AU.msg("تعذّر العثور على مكتبك. تأكد من تنفيذ ملفات SQL على Supabase (الـ trigger)، أو تواصل مع مدير المكتب.<br><small dir=\"ltr\" style=\"color:var(--mu)\">"+(error?String(error.message||error.code):(!mb?"لا توجد عضوية لهذا الحساب (user "+user.id+")":"المكتب غير مقروء (RLS)"))+"</small>");return false}
+ if(error||!mb||!mb.org){AU.msg("تعذّر العثور على مكتبك. تأكد من تنفيذ ملف SQL على Supabase (الـ trigger)، أو تواصل مع مدير المكتب.");return false}
  if(mb.status!=="active"){AU.msg("تم إيقاف حسابك من قبل مدير المكتب.");return false}
- CTX.mode="cloud";CTX.role=mb.role;CTX.org=mb.org;CTX.me=mb.full_name||user.phone||user.email;
- try{const{data:bf}=await sb.from("platform_settings").select("v").eq("k","billing_enforced").maybeSingle();CTX.billing=!!bf&&(bf.v===true||bf.v==="true")}catch(e){CTX.billing=false}
- return true}
+ CTX.mode="cloud";CTX.role=mb.role;CTX.org=mb.org;CTX.me=mb.full_name||user.email;return true}
 window.__reload=async()=>{try{await DB.refresh(D);M.forEach(m=>D[m.id]=D[m.id]||[]);D.tpl=D.tpl||[];D.lc=D.lc||[];D.lct=D.lct||[];render()}catch(e){console.error(e)}};
 (async()=>{
  const run=async()=>{window.__DB=await DB.load();const s=document.createElement("script");s.textContent=document.getElementById("app").textContent;document.body.appendChild(s)};
@@ -349,7 +315,7 @@ const VN={recon:"البنوك والتسوية",ap:"الذمم الدائنة",b
 ["👥","الموارد البشرية",["hrd","—الموظفون","hr","recruit","—الحضور والإجازات","attend","leaves","—الرواتب والمكافآت","payroll","advances","—التطوير","appraisal"]],
 ["🛡","الإعدادات والصلاحيات",["team","set","studio","bill","circulars","rep","log"]],
 ["📎","تطبيقات أخرى",["tpl","links"]]],used=new Set(SEC.flatMap(s=>s[2]));
-SEC[6][2].push(...M.filter(m=>!used.has(m.id)).map(m=>m.id));window.__SEC=SEC;window.__VN=VN;
+SEC[6][2].push(...M.filter(m=>!used.has(m.id)).map(m=>m.id));
 SEC.forEach(([ic,t,L0])=>{const L=navF(L0);if(!L.length)return;h+=`<details data-s="${t}"><summary>${ic} ${t}</summary>`+L.map(r=>r[0]==="—"?`<small>${r.slice(1)}</small>`:`<a data-r="${r}">${VN[r]||byId[r].t}</a>`).join("")+"</details>"});
 h+='<small>البيانات</small><div class="lk" id="bk">⬇ نسخة احتياطية</div><div class="lk" id="rs">⬆ استعادة نسخة</div><input type="file" id="rf" accept=".json" style="display:none">';$("sb").innerHTML=h;
 $("sb").querySelectorAll("a").forEach(a=>a.onclick=()=>{go(a.dataset.r);$("sb").classList.remove("o")})}
@@ -413,7 +379,7 @@ if(cur==="hearings"&&r.jy==="نعم"){const j=D.judgments.find(x=>x.auto&&String
 if(cur==="invoices"&&r.st==="مدفوعة"&&!r.paid){r.paid=1;D.acc.push({id:Date.now()+1,de:"تحصيل فاتورة "+r.no,ty:"إيراد",am:r.am,da:off(0),ca:r.ca});log("إضافة",byId.acc,"تحصيل تلقائي "+r.no);toast("سُجّل إيراد في المحاسبة")}
 if((cur==="expenses"&&r.st==="مدفوع"||cur==="payroll"&&r.st==="مصروف")&&!r.paid){r.paid=1;const py=cur==="payroll";D.acc.push({id:Date.now()+2,de:py?"راتب "+label("hr",r.em)+" "+r.mo:"مصروف: "+r.ds,ty:"مصروف",am:py?r.net:r.am,da:off(0),ca:r.ca||""});toast("سُجّل مصروف في المحاسبة")}
 save();render()};
-
+$("bm").onclick=()=>$("sb").classList.toggle("o");
 $("th").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"dark":"light"};
 
 let CV="month",CD=new Date(),TV="board";
@@ -829,8 +795,8 @@ GL={cases:"القضايا والمحاكم",sessions:"الجلسات والمو�
 LVN={none:"لا وصول",read:"عرض فقط",write:"عرض وإضافة وتعديل",full:"كامل مع الحذف"},NUM={none:0,read:1,write:2,full:3},
 DEFP={lawyer:{cases:"full",sessions:"full",finance:"read",crm:"full",hr:"none",staff:"read",admin:"read",other:"write",conf:true},assistant:{cases:"write",sessions:"write",finance:"none",crm:"write",hr:"none",staff:"read",admin:"none",other:"write",conf:false},secretary:{cases:"read",sessions:"write",finance:"none",crm:"read",hr:"none",staff:"read",admin:"none",other:"read",conf:false},accountant:{cases:"read",sessions:"none",finance:"full",crm:"read",hr:"write",staff:"read",admin:"none",other:"read",conf:false}};
 const permsOf=()=>({...DEFP,...((CTX.org&&CTX.org.role_perms)||{})});
-const plan=()=>{const o=CTX.org;if(!o)return{st:"local"};if(!CTX.billing)return{st:"open"};const n=Date.now(),te=Date.parse(o.trial_ends_at),pe=o.plan_ends_at?Date.parse(o.plan_ends_at):0;
- if(pe>n)return{st:"active",left:Math.ceil((pe-n)/864e5),plan:o.plan};return{st:"expired"}};
+const plan=()=>{const o=CTX.org;if(!o)return{st:"local"};const n=Date.now(),te=Date.parse(o.trial_ends_at),pe=o.plan_ends_at?Date.parse(o.plan_ends_at):0;
+ if(pe>n)return{st:"active",left:Math.ceil((pe-n)/864e5),plan:o.plan};if(te>n)return{st:"trial",left:Math.ceil((te-n)/864e5)};return{st:"expired"}};
 const LOCKED=()=>CTX.mode==="cloud"&&plan().st==="expired";
 function grp(m){return m==="home"||m==="sr"||m==="bill"?"*":m==="team"||m==="set"?"own":m==="cal"?"sessions":m==="rep"||m==="log"?"admin":m==="tpl"||m==="links"||m==="circulars"?"other":m==="hrd"?"hr":(m==="fin"||m==="je"||m==="facc")?"finance":GM[m]||"other"}
 function lvl(m){const g=grp(m);if(CTX.mode==="local"||g==="*")return 3;if(g==="own")return CTX.role==="owner"?3:0;
@@ -907,7 +873,8 @@ function pushNative(){if(!("Notification"in window)||Notification.permission!=="
 /* ---- بطاقة الاشتراك العلوية + بطاقات الجوال + تنبيه الجرس ---- */
 function post(){const n=alerts().filter(a=>a.pri<=1).length,bc=$("bc");if(bc){bc.textContent=n;bc.style.display=n?"":"none"}
  let b=$("bnr");if(!b){b=document.createElement("div");b.id="bnr";$("mn").insertBefore(b,$("ct"))}const p=plan();
- if(p.st==="expired")b.innerHTML=`<div class="bnr w">⛔ انتهى الاشتراك — النظام للقراءة فقط والمحاسبة والموارد البشرية والتقارير والتصدير مقفلة <button onclick="go('bill')">اشترك لإعادة التفعيل</button></div>`;
+ if(p.st==="trial")b.innerHTML=`<div class="bnr${p.left<=3?" w":""}">🎁 فترة تجريبية مجانية — متبقي <b>${p.left}</b> ${p.left===1?"يوم":"أيام"} <button onclick="go('bill')">اشترك الآن</button></div>`;
+ else if(p.st==="expired")b.innerHTML=`<div class="bnr w">⛔ انتهت الفترة التجريبية — النظام للقراءة فقط والمحاسبة والموارد البشرية والتقارير والتصدير مقفلة <button onclick="go('bill')">اشترك لإعادة التفعيل</button></div>`;
  else if(p.st==="active"&&p.left<=7)b.innerHTML=`<div class="bnr w">⏰ ينتهي اشتراكك خلال ${p.left} أيام <button onclick="go('bill')">تجديد</button></div>`;else b.innerHTML="";
  const add=$("add");if(add.style.display!=="none"&&!canAdd(cur))add.style.display="none";
  document.querySelectorAll("#ct table:not(.rt):not(.nrc),dialog table:not(.rt):not(.nrc)").forEach(t=>{if(t.closest("#prt"))return;t.classList.add("rc");const hs=[...t.querySelectorAll("thead th")].map(x=>x.textContent.trim());
@@ -937,18 +904,18 @@ window.invPrint=async id=>{const inv=find("invoices",id);if(!inv)return;const o=
 EXT.team={t:"الفريق والصلاحيات",v:async()=>{const ct=$("ct");
  if(CTX.mode!=="cloud"){ct.innerHTML='<div class="em" style="padding:40px"><div style="font-size:40px">👥</div><h3>إدارة الفريق متاحة في النسخة السحابية</h3><p>اضبط إعدادات Supabase في أعلى الملف لتفعيل الحسابات والأدوار.</p></div>';return}
  ct.innerHTML='<div class="em">جارٍ التحميل…</div>';const oid=CTX.org.id;
- const[m,iv]=await Promise.all([sb.from("members").select("user_id,role,status,full_name,email,phone").eq("org_id",oid).order("created_at"),sb.from("invites").select("*").eq("org_id",oid).is("accepted_at",null).order("created_at")]);
+ const[m,iv]=await Promise.all([sb.from("members").select("user_id,role,status,full_name,email").eq("org_id",oid).order("created_at"),sb.from("invites").select("*").eq("org_id",oid).is("accepted_at",null).order("created_at")]);
  if(m.error)return ct.innerHTML='<div class="em">تعذّر التحميل: '+esc(m.error.message)+"</div>";const P=permsOf();
- ct.innerHTML=`<div class="pn"><h3 style="margin:0 0 8px">أعضاء المكتب (${m.data.length})</h3><div class="tw"><table><thead><tr><th>الاسم</th><th>الجوال</th><th>الدور</th><th>الحالة</th><th></th></tr></thead><tbody>${m.data.map(u=>{const me=u.user_id===CTX.user.id;return`<tr><td>${esc(u.full_name||"—")}${me?" (أنت)":""}</td><td dir="ltr">${esc(u.phone||u.email||"")}</td><td>${u.role==="owner"||me?`<span class="b">${ROLES[u.role]}</span>`:`<select data-r="${u.user_id}">${Object.entries(ROLES).filter(x=>x[0]!=="owner").map(([k,v])=>`<option value="${k}"${k===u.role?" selected":""}>${v}</option>`).join("")}</select>`}</td><td>${me?"نشط":`<select data-s="${u.user_id}"><option value="active"${u.status==="active"?" selected":""}>نشط</option><option value="suspended"${u.status!=="active"?" selected":""}>موقوف</option></select>`}</td><td>${me?"":`<button class="d" data-x="${u.user_id}">إزالة</button>`}</td></tr>`}).join("")}</tbody></table></div></div>
- <div class="pn" style="margin-top:12px"><h3 style="margin:0 0 8px">دعوة عضو جديد</h3><div class="row"><div><label>الاسم</label><input id="in_n"></div><div><label>رقم الجوال</label><input id="in_e" type="tel" dir="ltr" inputmode="tel" placeholder="05xxxxxxxx"></div><div><label>الدور</label><select id="in_r">${Object.entries(ROLES).filter(x=>x[0]!=="owner").map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div></div><div class="act"><button id="in_go">إنشاء الدعوة</button></div><small style="color:var(--mu)">بعد الدعوة: يفتح الشخص الرابط <b dir="ltr">${esc(location.origin+location.pathname)}</b> ← «حساب جديد» ← بنفس رقم الجوال، وينضم لمكتبك تلقائياً بدوره.</small>
- ${iv.data&&iv.data.length?`<h4>دعوات معلّقة</h4>${iv.data.map(i=>`<div class="it"><b>${esc(i.full_name||"")}</b> <span dir="ltr">${esc(i.phone||i.email||"")}</span> — ${ROLES[i.role]} <button class="d" data-di="${i.id}">إلغاء</button></div>`).join("")}`:""}</div>
+ ct.innerHTML=`<div class="pn"><h3 style="margin:0 0 8px">أعضاء المكتب (${m.data.length})</h3><div class="tw"><table><thead><tr><th>الاسم</th><th>البريد</th><th>الدور</th><th>الحالة</th><th></th></tr></thead><tbody>${m.data.map(u=>{const me=u.user_id===CTX.user.id;return`<tr><td>${esc(u.full_name||"—")}${me?" (أنت)":""}</td><td dir="ltr">${esc(u.email||"")}</td><td>${u.role==="owner"||me?`<span class="b">${ROLES[u.role]}</span>`:`<select data-r="${u.user_id}">${Object.entries(ROLES).filter(x=>x[0]!=="owner").map(([k,v])=>`<option value="${k}"${k===u.role?" selected":""}>${v}</option>`).join("")}</select>`}</td><td>${me?"نشط":`<select data-s="${u.user_id}"><option value="active"${u.status==="active"?" selected":""}>نشط</option><option value="suspended"${u.status!=="active"?" selected":""}>موقوف</option></select>`}</td><td>${me?"":`<button class="d" data-x="${u.user_id}">إزالة</button>`}</td></tr>`}).join("")}</tbody></table></div></div>
+ <div class="pn" style="margin-top:12px"><h3 style="margin:0 0 8px">دعوة عضو جديد</h3><div class="row"><div><label>الاسم</label><input id="in_n"></div><div><label>البريد الإلكتروني</label><input id="in_e" type="email" dir="ltr"></div><div><label>الدور</label><select id="in_r">${Object.entries(ROLES).filter(x=>x[0]!=="owner").map(([k,v])=>`<option value="${k}">${v}</option>`).join("")}</select></div></div><div class="act"><button id="in_go">إنشاء الدعوة</button></div><small style="color:var(--mu)">بعد الدعوة: يفتح الشخص الرابط <b dir="ltr">${esc(location.origin+location.pathname)}</b> ← «حساب جديد» ← بنفس البريد، وينضم لمكتبك تلقائياً بدوره.</small>
+ ${iv.data&&iv.data.length?`<h4>دعوات معلّقة</h4>${iv.data.map(i=>`<div class="it"><b>${esc(i.full_name||"")}</b> <span dir="ltr">${esc(i.email)}</span> — ${ROLES[i.role]} <button class="d" data-di="${i.id}">إلغاء</button></div>`).join("")}`:""}</div>
  <div class="pn" style="margin-top:12px"><h3 style="margin:0 0 4px">مصفوفة الصلاحيات</h3><small style="color:var(--mu)">مدير المكتب يملك كل الصلاحيات دائماً. التطبيق يُنفَّذ أيضاً على مستوى قاعدة البيانات (RLS).</small><div class="tw"><table class="nrc"><thead><tr><th>القسم</th>${["lawyer","assistant","secretary","accountant"].map(r=>`<th>${ROLES[r]}</th>`).join("")}</tr></thead><tbody>${Object.keys(GL).map(g=>`<tr><td>${GL[g]}</td>${["lawyer","assistant","secretary","accountant"].map(r=>`<td><select data-p="${r}:${g}">${Object.entries(LVN).map(([k,v])=>`<option value="${k}"${(P[r]||{})[g]===k?" selected":""}>${v}</option>`).join("")}</select></td>`).join("")}</tr>`).join("")}<tr><td>الاطلاع على القضايا السرّية</td>${["lawyer","assistant","secretary","accountant"].map(r=>`<td><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" style="width:auto" data-c="${r}"${(P[r]||{}).conf?" checked":""}> مسموح</label></td>`).join("")}</tr></tbody></table></div>
  <div class="act"><button id="pm_sv">حفظ الصلاحيات</button><button class="g" id="pm_df">استعادة الافتراضي</button></div><small style="color:var(--mu)">لجعل قضية سرّية: عدّلها واختر «سرية = نعم». المحاسب يبقى يرى فواتيرها دون تفاصيلها. تنبيه: دليل الموظفين يتضمن حقل الراتب — اجعله «لا وصول» لأي دور لا يجب أن يرى الرواتب.</small></div>`;
  ct.querySelectorAll("[data-r]").forEach(e=>e.onchange=async()=>{const{error}=await sb.from("members").update({role:e.value}).eq("org_id",oid).eq("user_id",e.dataset.r);toast(error?"تعذّر التحديث":"تم تحديث الدور")});
  ct.querySelectorAll("[data-s]").forEach(e=>e.onchange=async()=>{const{error}=await sb.from("members").update({status:e.value}).eq("org_id",oid).eq("user_id",e.dataset.s);toast(error?"تعذّر التحديث":"تم تحديث الحالة")});
  ct.querySelectorAll("[data-x]").forEach(b=>b.onclick=async()=>{if(b.dataset.c!=="1"){b.dataset.c="1";b.textContent="تأكيد؟";return}const{error}=await sb.from("members").delete().eq("org_id",oid).eq("user_id",b.dataset.x);toast(error?"تعذّرت الإزالة":"أُزيل العضو");EXT.team.v()});
  ct.querySelectorAll("[data-di]").forEach(b=>b.onclick=async()=>{await sb.from("invites").delete().eq("id",b.dataset.di);EXT.team.v()});
- $("in_go").onclick=async()=>{const e=AU.ph($("in_e").value);if(!e)return toast("اكتب رقم جوال صحيحاً");const{error}=await sb.from("invites").insert({org_id:oid,phone:e,full_name:$("in_n").value.trim(),role:$("in_r").value});toast(error?(error.code==="23505"?"توجد دعوة لهذا الرقم":"تعذّر إنشاء الدعوة"):"أُنشئت الدعوة");if(!error)EXT.team.v()};
+ $("in_go").onclick=async()=>{const e=$("in_e").value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(e))return toast("اكتب بريداً صحيحاً");const{error}=await sb.from("invites").insert({org_id:oid,email:e,full_name:$("in_n").value.trim(),role:$("in_r").value});toast(error?(error.code==="23505"?"توجد دعوة لهذا البريد":"تعذّر إنشاء الدعوة"):"أُنشئت الدعوة");if(!error)EXT.team.v()};
  $("pm_sv").onclick=async()=>{const o={};ct.querySelectorAll("[data-p]").forEach(e=>{const[r,g]=e.dataset.p.split(":");(o[r]=o[r]||{})[g]=e.value});ct.querySelectorAll("[data-c]").forEach(e=>{(o[e.dataset.c]=o[e.dataset.c]||{}).conf=e.checked});
   const{error}=await sb.from("organizations").update({role_perms:o}).eq("id",oid);if(!error)CTX.org.role_perms=o;toast(error?"تعذّر الحفظ":"حُفظت الصلاحيات")};
  $("pm_df").onclick=async()=>{const{error}=await sb.from("organizations").update({role_perms:DEFP}).eq("id",oid);if(!error){CTX.org.role_perms=DEFP;EXT.team.v()}}}};
@@ -967,12 +934,12 @@ EXT.set={t:"إعدادات المكتب",v:()=>{const o=OFF(),c=cfg(),ct=$("ct")
   save();toast("حُفظت الإعدادات — أعد تحميل الصفحة ليظهر اسم المكتب الجديد في كل الشاشات")}}};
 /* ---- الاشتراك والدفع (Moyasar) ---- */
 EXT.bill={t:"الاشتراك والفوترة",v:async()=>{const ct=$("ct"),p=plan();
- if(CTX.mode!=="cloud"||!CTX.billing){ct.innerHTML='<div class="em" style="padding:40px"><div style="font-size:40px">💳</div><h3>الاشتراكات غير مفعّلة حالياً</h3><p>النظام متاح لمكتبك بدون رسوم أو فترة تجريبية في الوقت الحالي.</p></div>';return}
+ if(CTX.mode!=="cloud"){ct.innerHTML='<div class="em" style="padding:40px"><div style="font-size:40px">💳</div><h3>الاشتراكات متاحة في النسخة السحابية</h3></div>';return}
  ct.innerHTML='<div class="em">جارٍ التحميل…</div>';const owner=CTX.role==="owner",o=CTX.org;
  const[pl,py]=await Promise.all([sb.from("plans").select("*").eq("active",true).order("amount_sar"),owner?sb.from("payments").select("*").eq("org_id",o.id).order("created_at",{ascending:false}):Promise.resolve({data:[]})]);
- const st=p.st==="active"?`<span class="b" style="color:#16a34a;border-color:#16a34a">مشترك — ينتهي ${new Date(o.plan_ends_at).toLocaleDateString("ar-SA")} (${p.left} يوم)</span>`:'<span class="b" style="color:var(--er);border-color:var(--er)">الاشتراك منتهٍ</span>';
+ const st=p.st==="active"?`<span class="b" style="color:#16a34a;border-color:#16a34a">مشترك — ينتهي ${new Date(o.plan_ends_at).toLocaleDateString("ar-SA")} (${p.left} يوم)</span>`:p.st==="trial"?`<span class="b">فترة تجريبية — متبقي ${p.left} يوم</span>`:'<span class="b" style="color:var(--er);border-color:var(--er)">انتهت الفترة التجريبية</span>';
  const feats=["قضايا وجلسات وموكلون بلا حدود","فريق عمل بأدوار وصلاحيات","تنبيهات الجلسات وتذكير الموكلين","فاتورة ضريبية بـ QR وتقارير مالية","مرفقات سحابية ونسخ احتياطي تلقائي"];
- ct.innerHTML=`<div class="pn"><h3 style="margin:0 0 6px">حالة الاشتراك</h3>${st}<div style="color:var(--mu);font-size:12px;margin-top:6px">${p.st==="expired"?"النظام في وضع القراءة فقط. المحاسبة والموارد البشرية والتقارير والتصدير مقفلة حتى الاشتراك.":"تُقفل المميزات المدفوعة تلقائياً عند انتهاء الاشتراك."}</div></div>
+ ct.innerHTML=`<div class="pn"><h3 style="margin:0 0 6px">حالة الاشتراك</h3>${st}<div style="color:var(--mu);font-size:12px;margin-top:6px">${p.st==="expired"?"النظام في وضع القراءة فقط. المحاسبة والموارد البشرية والتقارير والتصدير مقفلة حتى الاشتراك.":"بعد انتهاء الفترة التجريبية تُقفل المميزات المدفوعة تلقائياً."}</div></div>
  <div class="grid" style="margin-top:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">${(pl.data||[]).map(x=>`<div class="pn"><h3 style="margin:0">${esc(x.name)}</h3><div style="font-size:28px;color:var(--pr);font-weight:700;margin:6px 0">${Number(x.amount_sar).toLocaleString("ar-SA")} <small style="font-size:13px">ر.س / ${x.months===1?"شهر":x.months===12?"سنة":x.months+" أشهر"}</small></div><ul style="padding-inline-start:18px;color:var(--mu);font-size:13px">${feats.map(f=>`<li>${f}</li>`).join("")}</ul>${owner?`<button style="width:100%" data-pl="${x.code}">${p.st==="active"?"تجديد / تمديد":"اشترك الآن"}</button>`:'<small style="color:var(--mu)">الدفع من صلاحية مدير المكتب</small>'}</div>`).join("")||'<div class="em">لا توجد خطط — نفّذ ملف SQL</div>'}</div>
  <div class="pn" id="payBox" style="margin-top:12px;display:none"><h3 id="payT" style="margin:0 0 8px"></h3><div class="mysr-form"></div><small style="color:var(--mu)">الدفع عبر مدى وفيزا وماستركارد وApple Pay — تتم المعالجة لدى Moyasar ولا تمر بيانات البطاقة بخوادمنا. يتفعّل الاشتراك تلقائياً بعد التحقق من الدفع.</small></div>
  ${owner&&py.data&&py.data.length?`<div class="pn" style="margin-top:12px"><h3 style="margin:0 0 8px">سجل المدفوعات</h3><div class="tw"><table><thead><tr><th>التاريخ</th><th>الخطة</th><th>المبلغ</th><th>الحالة</th><th>المرجع</th></tr></thead><tbody>${py.data.map(x=>`<tr><td>${new Date(x.created_at).toLocaleDateString("ar-SA")}</td><td>${esc(x.plan)}</td><td>${(x.amount/100).toLocaleString("ar-SA")} ر.س</td><td>${esc(x.status)}</td><td dir="ltr">${esc(x.moyasar_id.slice(0,13))}…</td></tr>`).join("")}</tbody></table></div></div>`:""}`;
@@ -1148,10 +1115,10 @@ rep:'<rect x="6" y="6" width="36" height="36" rx="7" fill="#1f5f8b"/><path d="M1
 team:'<path d="M24 4l17 6v13c0 11-8 18-17 21C15 41 7 34 7 23V10z" fill="#8e4a7f"/><path d="M16 24l6 6 11-12" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
 set:'<circle cx="24" cy="24" r="8" fill="#fff" stroke="#1d8ff2" stroke-width="6"/><path d="M24 4v7M24 37v7M4 24h7M37 24h7M10 10l5 5M33 33l5 5M38 10l-5 5M15 33l-5 5" stroke="#1d8ff2" stroke-width="5" stroke-linecap="round"/>',
 bill:'<rect x="4" y="10" width="40" height="28" rx="6" fill="#8e4a7f"/><rect x="4" y="17" width="40" height="7" fill="#1f5f8b"/><rect x="10" y="29" width="13" height="4" rx="2" fill="#1fcfb3"/>'};
-const APPS=[["لوحة التحكم","home","home"],["القضايا والمحاكم","cases","cases"],["الجلسات","hearings","court"],["التقويم","cal","cal"],["المحاسبة والمالية","fin","acc"],["الفواتير","invoices","inv"],["المشاريع","pj","pj"],["عقود المحاماة","lc","lc"],["العملاء والمبيعات","parties","crm"],["الاستشارات","consultations","chat"],["المهام","tasks","task"],["الوقت والمصروفات","time","time"],["الموارد البشرية","hrd","hr"],["الأرشيف","archives","arc"],["قوالب المستندات","tpl","tpl"],["التقارير","rep","rep"],["الفريق والصلاحيات","team","team"],["إعدادات المكتب","set","set"],["استوديو التخصيص","studio","studio","set"],["الاشتراك","bill","bill"]];
+const APPS=[["لوحة التحكم","home","home"],["القضايا والمحاكم","cases","cases"],["الجلسات","hearings","court"],["التقويم","cal","cal"],["البنوك والتسوية","recon","acc","bank"],["الذمم الدائنة","ap","coin","expenses"],["الموازنة والتدفق","bud","rep","fin"],["استوديو التخصيص","studio","studio","set"],["المشاريع","pj","pj"],["المخطط الزمني","gantt","gantt","projects"],["مهامي","mt","task","tasks"],["تحليل المشاريع","pjr","rep","projects"],["الذمم المدينة","ar","coin","invoices"],["الإقرار الضريبي","vat","rep","invoices"],["عقود المحاماة","lc","lc"],["العملاء","parties","crm"],["الاستشارات","consultations","chat"],["المهام","tasks","task"],["الوقت والمصروفات","time","time"],["المحاسبة","fin","acc"],["الفواتير","invoices","inv"],["الموارد البشرية","hrd","hr"],["الأرشيف","archives","arc"],["قوالب المستندات","tpl","tpl"],["التقارير","rep","rep"],["الفريق والصلاحيات","team","team"],["إعدادات المكتب","set","set"],["الاشتراك","bill","bill"]];
 EXT.apps={t:"التطبيقات",v:()=>{const t=off(0),h=D.hearings.filter(x=>x.da===t).length,B={cases:h,hearings:h,tasks:D.tasks.filter(x=>x.st!=="مكتملة"&&x.du&&x.du<t).length,invoices:D.invoices.filter(i=>i.st!=="مدفوعة").length,lc:(D.lc||[]).filter(c=>c.st==="بانتظار التوقيع").length,pj:D.projects.filter(p=>p.st==="نشطة"&&p.ed&&p.ed<t).length},
-A=APPS.filter(a=>navF([a[3]||(a[1]==="pj"?"projects":a[1])]).length&&(a[1]!=="bill"||CTX.billing));
-$("ct").innerHTML=`<div class="apw"><div class="apill"><b>⚖ ${esc(OFF().name||"مكتبي")}</b><span>${new Date().toLocaleDateString("ar-u-ca-gregory",{weekday:"long",day:"numeric",month:"long"})} · ${new Date().toLocaleDateString("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"})}</span><span>👋 ${esc(CTX.me||"مرحباً")}</span></div><div class="apk"><span>⚖ جلسات اليوم <b>${h}</b></span><span>⏰ مهام متأخرة <b>${B.tasks}</b></span><span>🧾 فواتير غير مدفوعة <b>${B.invoices}</b></span><span>✍ عقود بانتظار التوقيع <b>${B.lc}</b></span></div><div class="apg">${A.map(a=>`<a class="apt" data-g="${a[1]}"><div class="api"><svg viewBox="0 0 48 48">${S[a[2]]}</svg>${B[a[1]]?`<span class="apn">${B[a[1]]}</span>`:""}</div><span>${a[0]}</span></a>`).join("")}</div></div>`;
+A=APPS.filter(a=>navF([a[3]||(a[1]==="pj"?"projects":a[1])]).length);
+$("ct").innerHTML=`<div class="apw"><div class="apill"><b>⚖ ${esc(OFF().name||"مكتبي")}</b><span>${new Date().toLocaleDateString("ar-u-ca-gregory",{weekday:"long",day:"numeric",month:"long"})} · ${new Date().toLocaleDateString("ar-SA-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"})}</span><span>👋 ${esc(CTX.me||"مرحباً")}</span><span>جلسات اليوم: <b>${h}</b></span></div><div class="apg">${A.map(a=>`<a class="apt" data-g="${a[1]}"><div class="api"><svg viewBox="0 0 48 48">${S[a[2]]}</svg>${B[a[1]]?`<span class="apn">${B[a[1]]}</span>`:""}</div><span>${a[0]}</span></a>`).join("")}</div></div>`;
 $("ct").querySelectorAll("[data-g]").forEach(e=>e.onclick=()=>go(e.dataset.g))}};
 /* ---- المشاريع ---- */
 const PJ={v:"k",id:null,tb:"t",q:"",ow:""},ST=[["مسودة","#94a3b8"],["نشطة","#1d8ff2"],["مكتملة","#2fb67c"],["مغلقة","#6b7488"]],TC={"استشارات":"#8e4a7f","عقود":"#1fcfb3","تأسيس شركات":"#f58220","تحكيم":"#1d8ff2","أخرى":"#94a3b8"},N=v=>Number(v||0).toLocaleString("en-US"),cw=m=>lvl(m)>=2,same=(a,b)=>String(a)===String(b),
@@ -1319,23 +1286,6 @@ ct.innerHTML=`<div class="pjb"><div><h2>🎯 الموازنة والتدفق ا�
 ct.querySelectorAll("[data-b]").forEach(e=>e.onchange=()=>{const c=cfgW();c.bud=c.bud||{};c.bud[e.dataset.b]=Number(e.value||0);save();EXT.bud.v()});if($("lks"))$("lks").onclick=()=>{cfgW().lk=$("lk").value;log("تعديل",{t:"قفل الفترة"},$("lk").value||"بدون");save();toast($("lk").value?"قُفلت الفترة حتى "+$("lk").value:"أُلغي القفل")}}};
 })();
 
-
-/* ===== v4: شريط القوائم بنمط Odoo + قائمة المستخدم ===== */
-(()=>{
- function menubar(){let b=$("mbar");if(!b){b=document.createElement("div");b.id="mbar";document.querySelector("header").insertAdjacentElement("afterend",b)}
-  if(cur==="apps"){b.style.display="none";return}
-  const S=(window.__SEC||[]).find(x=>x[2].includes(cur)),VN=window.__VN||{};b.style.display="";
-  if(!S){b.innerHTML='<a class="mh" data-r="apps">⊞ التطبيقات</a>';}
-  else{const L=navF(S[2]);b.innerHTML='<a class="mh" data-r="apps">⊞</a><b class="mt">'+S[0]+' '+esc(S[1])+'</b>'+L.map(r=>r[0]==="—"?'<i class="ms">'+esc(r.slice(1))+'</i>':'<a data-r="'+r+'"'+(r===cur?' class="on"':'')+'>'+esc(VN[r]||(byId[r]||{}).t||r)+'</a>').join("")}
-  b.querySelectorAll("a[data-r]").forEach(a=>a.onclick=()=>go(a.dataset.r))}
- {const _r=render;render=function(){_r.apply(this,arguments);try{menubar()}catch(e){console.error(e)}}}
- const um=$("um"),mm=$("umm");
- const drawU=()=>{mm.innerHTML='<div class="uh"><i>'+esc(ini(CTX.me||"م"))+'</i><div><b>'+esc(CTX.me||"مدير المكتب")+'</b><br><small>'+(CTX.mode==="cloud"?esc(ROLES[CTX.role]||""):"وضع محلي")+'</small></div></div><a data-a="home">🏠 لوحة المؤشرات</a><a data-a="bk">⬇ نسخة احتياطية</a><a data-a="rs">⬆ استعادة نسخة</a>'+(CTX.mode==="cloud"?'<a data-a="lo">⎋ تسجيل الخروج</a>':"");
-  mm.querySelectorAll("a").forEach(a=>a.onclick=async()=>{mm.classList.remove("o");const k=a.dataset.a;
-   if(k==="home")go("home");else if(k==="lo"){await sb.auth.signOut();location.reload()}else{const t=$(k);if(t)t.click()}})};
- um.onclick=e=>{e.stopPropagation();drawU();mm.classList.toggle("o")};
- document.addEventListener("click",e=>{if(!e.target.closest("#umm,#um"))mm.classList.remove("o")});
-})();
 const h=location.hash.replace("#/","");if(h&&(byId[h]||EXT[h]||h==="log"||h==="tpl"||h==="cal"||h==="rep"||h==="fin"||h==="je"||h==="facc"||h==="hrd"||h==="lc"))cur=h;
 nav();render();
 (()=>{const st=document.createElement("style");st.textContent="body.mva #add{display:none!important}#add2{position:fixed;left:18px;top:calc(20mm + env(safe-area-inset-top,0px));z-index:6;box-shadow:0 4px 14px #0005;padding:10px 18px}";document.head.appendChild(st);
@@ -1535,7 +1485,6 @@ new MutationObserver(fix).observe($("ct"),{childList:true});new MutationObserver
 الحضور=Attendees
 المحتوى=Content
 البريد الإلكتروني=Email
-رقم الجوال=Mobile number
 المدينة=City
 الموظف=Employee
 الوظيفة=Job title

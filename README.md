@@ -7,16 +7,15 @@
 | `sql/01_supabase_schema.sql` | الجداول + RLS + الصلاحيات + التخزين (الأساس) |
 | `sql/02_contracts_patch.sql` | حارس العقود (التعميد والقفل) + عدّاد أرقام العقود |
 | `sql/03_accounting_studio_patch.sql` | وحدات البنوك + قفل الفترة المحاسبية |
-| `sql/04_phone_auth_no_trial_patch.sql` | الدخول برقم الجوال + إيقاف الفترة التجريبية |
 | `supabase/functions/moyasar-verify` | التحقق من الدفع وتفعيل الاشتراك (عند تفعيل Moyasar) |
 | `supabase/functions/send-reminders` | تذكير بريدي تلقائي بالجلسات (اختياري) |
 
 ## النشر بالترتيب
-1. **قاعدة البيانات:** Supabase ← SQL Editor ← نفّذ الملفات الأربعة في `sql/` بترتيب أرقامها، كلاً في استعلام مستقل.
-2. **الجوال:** Authentication ← Providers ← **Phone** ← Enable، واربط مزوّد رسائل SMS (Twilio أو غيره) ثم فعّل **Enable phone confirmations** ليصل رمز تحقق لكل رقم. الدخول بعد ذلك بالجوال وكلمة المرور.
+1. **قاعدة البيانات:** Supabase ← SQL Editor ← نفّذ الملفات الثلاثة في `sql/` بترتيب أرقامها، كلاً في استعلام مستقل.
+2. **البريد:** Authentication ← Providers ← Email ← فعّل **Confirm email**.
 3. **الاستضافة:** Cloudflare ← Workers & Pages ← Create ← Pages ← Upload assets ← ارفع `index.html`.
 4. **الربط:** ضع رابط الموقع في Supabase ← Authentication ← URL Configuration (**Site URL** و **Redirect URLs**).
-5. **أول دخول:** أنشئ حساب مدير المكتب وأكّد رقم جوالك بالرمز. من «إعدادات المكتب» أدخل اسم المكتب والرقم الضريبي (15 رقماً).
+5. **أول دخول:** أنشئ حساب مدير المكتب وفعّل بريدك. من «إعدادات المكتب» أدخل اسم المكتب والرقم الضريبي (15 رقماً).
 
 ## الدفع (Moyasar) — اختياري
 ```
@@ -31,9 +30,6 @@ supabase functions deploy moyasar-verify
 supabase secrets set RESEND_API_KEY=re_xxx REMINDER_FROM="مكتبكم <no-reply@domain.com>" CRON_SECRET=نص_سري
 supabase functions deploy send-reminders --no-verify-jwt
 ```
-
-## الفوترة
-الفترة التجريبية موقوفة: المفتاح `billing_enforced` في جدول `platform_settings` قيمته `false`، فكل المكاتب تعمل بلا قيود اشتراك وتختفي شاشة الاشتراك. لتفعيل الاشتراكات لاحقاً: `update platform_settings set v='true'::jsonb where k='billing_enforced';`
 
 ## قائمة اختبار قبل الاستخدام بيانات حقيقية
 - [ ] تسجيل مدير ثم إضافة موكل وقضية، وإعادة تحميل الصفحة: البيانات باقية.
@@ -53,8 +49,6 @@ supabase functions deploy send-reminders --no-verify-jwt
 - **الاستوديو:** تعديل الحقول والقوائم والنماذج وقوالب الطباعة (شعار، لون، شروط) لكل البرنامج.
 
 ## حدود يجب معرفتها
-- **الدخول بالجوال:** إن عطّلت تأكيد الجوال (بلا SMS) يستطيع أي شخص التسجيل برقم مدعوّ قبل صاحبه والانضمام لمكتبك. فعّل رمز التحقق قبل أي بيانات حقيقية.
-- **الحسابات القديمة بالبريد:** تبقى تدخل من رابط «حساب قديم بالبريد؟» في شاشة الدخول.
 - **ZATCA:** المرحلة الأولى فقط (QR). الربط والتوقيع والإبلاغ (المرحلة الثانية) غير مضمّنة.
 - **الإقرار الضريبي:** ملخص للمراجعة وليس بديلاً عن الإقرار الرسمي.
 - **واتساب:** فتح رسالة جاهزة بنقرة. الإرسال التلقائي يحتاج WhatsApp Business API.
