@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="theme-color" content="#0e1420"><meta name="mobile-web-app-capable" content="yes"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0e1420">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>نظام إدارة مكتب المحاماة</title>
 <style>
 :root{--bg:#0b0f17;--card:#121826;--tx:#e6edf7;--mu:#8b97ad;--bd:#1f2a3d;--pr:#14b8a6;--sb:#0e1420;--er:#f43f5e;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -10,204 +12,289 @@
 *{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
 body{margin:0;background:var(--bg);color:var(--tx);font:14px Tahoma,"Segoe UI",Arial,sans-serif}
 #sb{position:fixed;top:0;bottom:0;right:0;width:230px;background:var(--sb);color:#cfd8ea;overflow-y:auto;padding:12px 0;padding-top:calc(12px + env(safe-area-inset-top,0px));z-index:5;transition:transform .3s}
-#sb h2{margin:0 16px 10px;color:#fff;font-size:16px}#sb small{display:block;padding:12px 16px 4px;color:#7f8db0;font-size:11px}
-#sb a,#sb .lk{display:block;padding:9px 16px;margin:2px 10px;border-radius:10px;color:inherit;cursor:pointer}#sb a:hover{background:#ffffff14}#sb a.on{background:var(--pr);color:#fff}
+#sb h2{margin:0 16px 10px;color:#fff;font-size:16px}
+#sb small{display:block;padding:12px 16px 4px;color:#7f8db0;font-size:11px}
+#sb a,#sb .lk{display:block;padding:9px 16px;margin:2px 10px;border-radius:10px;color:inherit;cursor:pointer}
+#sb a:hover{background:#ffffff14}
+#sb a.on{background:var(--pr);color:#fff}
 #mn{margin-right:230px}
 header{background:var(--card);border-bottom:1px solid var(--bd);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-h1{margin:0;font-size:18px;display:inline}main{padding:16px;max-width:1150px}
+h1{margin:0;font-size:18px;display:inline}
+main{padding:16px;max-width:1150px}
 input,select,textarea{background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px 10px;font:inherit;width:100%}
 button{font:inherit;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;background:var(--pr);color:#fff}
-button.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}button.d{background:transparent;color:var(--er);padding:4px 8px}
+button.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+button.d{background:transparent;color:var(--er);padding:4px 8px}
 #bm{display:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.st{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;cursor:pointer}.st b{display:block;font-size:22px;margin-top:4px;color:var(--pr)}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:12px;cursor:pointer}
+.st b{display:block;font-size:22px;margin-top:4px;color:var(--pr)}
 .tw{overflow-x:auto;background:var(--card);border:1px solid var(--bd);border-radius:10px;margin-top:12px}
-table{border-collapse:collapse;width:100%;min-width:640px}th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
-th{color:#fff;background:linear-gradient(90deg,#2563eb,#0d9488);font-weight:600}tr:last-child td{border:0}
+table{border-collapse:collapse;width:100%;min-width:640px}
+th,td{padding:10px 12px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}
+th{color:#fff;background:linear-gradient(90deg,#2563eb,#0d9488);font-weight:600}
+tr:last-child td{border:0}
 .b{padding:2px 9px;border-radius:99px;font-size:12px;border:1px solid var(--pr);color:var(--pr)}
-dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);width:min(560px,94vw);max-height:90vh;padding:18px}dialog::backdrop{background:#0008}
-label{display:block;margin:8px 0 3px;color:var(--mu);font-size:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.act{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
-.em{text-align:center;color:var(--mu);padding:28px}h3{margin:16px 0 0}.it{padding:5px 0;border-bottom:1px dashed var(--bd)}
+dialog{border:1px solid var(--bd);border-radius:12px;background:var(--card);color:var(--tx);width:min(560px,94vw);max-height:90vh;padding:18px}
+dialog::backdrop{background:#0008}
+label{display:block;margin:8px 0 3px;color:var(--mu);font-size:12px}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.act{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.em{text-align:center;color:var(--mu);padding:28px}
+h3{margin:16px 0 0}
+.it{padding:5px 0;border-bottom:1px dashed var(--bd)}
 #ts{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--sb);color:#fff;padding:10px 18px;border-radius:8px;display:none;z-index:9}
-#prt{display:none}.wz{display:grid;grid-template-columns:230px 1fr;gap:16px}.sv{border-left:1px solid var(--bd);padding-left:12px}.sp{display:flex;gap:10px;align-items:center;padding:10px 6px;cursor:pointer}
-button{transition:filter .15s,transform .1s}button:hover{filter:brightness(1.12)}button:active{transform:scale(.97)}
+#prt{display:none}
+button{transition:filter .15s,transform .1s}
+button:hover{filter:brightness(1.12)}
+button:active{transform:scale(.97)}
 input:focus,select:focus,textarea:focus{outline:2px solid var(--pr);outline-offset:-1px}
-.st{transition:transform .15s,border-color .15s}.st:hover{transform:translateY(-2px);border-color:var(--pr)}tbody tr:hover td{background:color-mix(in srgb,var(--pr) 8%,transparent)}.uc{display:flex;gap:6px;align-items:center;padding:6px}
-.bn{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:16px;padding:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.bn button{background:#ffffff33;color:#fff;border:0}
-.pn{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px}.dg2{display:grid;grid-template-columns:2fr 1fr;gap:12px}
-.kb{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.kc{background:var(--bg);border:1px dashed var(--bd);border-radius:12px;min-height:180px;padding:6px}.kh{color:#fff;border-radius:10px;padding:6px 8px;font-weight:700;font-size:12px;margin-bottom:4px}
-#gr{position:absolute;top:100%;right:0;left:0;background:var(--card);border:1px solid var(--bd);border-radius:10px;z-index:8;display:none;max-height:300px;overflow:auto}#gr div{padding:8px 12px;cursor:pointer;border-bottom:1px solid var(--bd)}#gr div:hover{background:color-mix(in srgb,var(--pr) 10%,transparent)}
-@media(max-width:760px){.kb,.dg2{grid-template-columns:1fr}}.rt{width:100%;border-collapse:collapse}.rt th,.rt td{border:1px solid var(--bd);padding:8px;text-align:right}.rt th{background:var(--bg);color:#fff;font-weight:700}
-@media print{body>*:not(#prt){display:none!important}#prt{display:block;font-size:14px;line-height:1.8;padding:24px}#prt table{border-collapse:collapse;width:100%}#prt td,#prt th{border:1px solid #888;padding:6px}}
-@media(max-width:760px){#sb{transform:translateX(100%)}#sb.o{transform:none}#mn{margin-right:0}#bm{display:inline-block}}
-#cm{position:fixed;z-index:20;background:var(--card);border:1px solid var(--bd);border-radius:12px;box-shadow:0 8px 30px #0006;min-width:210px;max-height:80vh;overflow:auto;padding:4px}#cm button{display:flex;justify-content:space-between;align-items:center;width:100%;padding:8px 12px;border:0;background:0;color:var(--tx);cursor:pointer;text-align:right;font-size:13px}#cm button:hover{background:color-mix(in srgb,var(--pr) 10%,transparent)}#cm i{opacity:.7}#cm button i{order:2}
-header button#bell{position:relative}.bc{position:absolute;top:-6px;left:-6px;background:var(--er);color:#fff;border-radius:99px;font-size:11px;min-width:18px;height:18px;line-height:18px;text-align:center}
-.sbs{margin:0 10px 10px}.sbs input{background:#ffffff14;border-color:#ffffff22;color:#fff}.sbs input::placeholder{color:#9fb0cf}
-.bnr{background:linear-gradient(90deg,#0f766e,#2563eb);color:#fff;padding:9px 16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:13px}.bnr.w{background:linear-gradient(90deg,#b45309,#dc2626)}
-#nf{width:min(560px,96vw)}.nf{padding:9px 4px}.nf.u b{color:var(--er)}.nfb{display:inline-block;padding:5px 11px;border-radius:8px;background:var(--pr);color:#fff;text-decoration:none;font-size:12px}
-@media(max-width:900px){#sb{transform:translateX(100%)}#sb.o{transform:none;box-shadow:0 0 0 100vmax #0006}#mn{margin-right:0}#bm{display:inline-block}}
+.st{transition:transform .15s,border-color .15s}
+.st:hover{transform:translateY(-2px);border-color:var(--pr)}
+tbody tr:hover td{background:color-mix(in srgb,var(--pr) 8%,transparent)}
+.bn{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff;border-radius:16px;padding:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bn button{background:#ffffff33;color:#fff;border:0}
+.pn{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:14px}
 @media(max-width:760px){
- header{flex-wrap:wrap;padding:10px 12px}header>div:nth-child(2){order:3;flex:1 1 100%!important;max-width:none!important}
- main{padding:10px}input,select,textarea{font-size:16px}button{min-height:40px}.ca button{min-height:36px;min-width:36px}
- .row{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.act{gap:6px}
- dialog{width:100vw!important;max-width:100vw!important;max-height:94dvh;margin:auto 0 0;border-radius:16px 16px 0 0;overflow:auto}
- .tw{background:transparent;border:0;overflow:visible}
- table.rc{display:block;min-width:0!important}table.rc thead{display:none}table.rc tbody{display:block}
- table.rc tr{display:block;background:var(--card);border:1px solid var(--bd);border-radius:12px;margin:0 0 10px;padding:4px 12px}
- table.rc td{display:flex;justify-content:space-between;align-items:center;gap:12px;white-space:normal;border:0;border-bottom:1px dashed var(--bd);padding:8px 0;text-align:start}
- table.rc td:last-child{border-bottom:0;justify-content:flex-end}table.rc td[data-label]:not([data-label=""]):before{content:attr(data-label);color:var(--mu);font-size:12px;flex:none}
- table.rc td[colspan]{display:block;text-align:center}
- table.rc tbody tr:hover td{background:transparent}
- .cal{gap:2px}.cd{min-height:58px;font-size:11px;padding:2px}.ev{font-size:10px}
- #cm{max-width:92vw}.bnr button{margin-inline-start:0}
+  #sb{transform:translateX(100%)}
+  #sb.o{transform:none}
+  #mn{margin-right:0}
+  #bm{display:inline-block}
+  header{flex-wrap:wrap;padding:10px 12px}
+  main{padding:10px}
+  input,select,textarea{font-size:16px}
+  button{min-height:40px}
+  .row{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .act{gap:6px}
 }
-@media print{#bnr,#nf{display:none!important}}
-@media(max-width:760px){#add2{top:auto!important;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:16px;border-radius:99px;padding:12px 20px}main{padding-bottom:84px}}
+@media print{body>*:not(#prt){display:none!important}#prt{display:block;font-size:14px;line-height:1.8;padding:24px}}
 </style>
 </head>
 <body>
 <nav id="sb"></nav>
 <div id="mn">
-<header><div><button class="g" id="bm">☰</button> <button class="g" id="apb" title="التطبيقات">⊞</button> <h1 id="ttl"></h1></div><div style="position:relative;flex:1;max-width:380px"><input id="gs" placeholder="🔍 بحث سريع…" style="width:100%"></div><button class="g" id="th" title="المظهر">🌓</button><button id="bell" title="التنبيهات">🔔<span class="bc" id="bc" style="display:none"></span></button></header>
-<main id="ct"></main>
+  <header>
+    <div>
+      <button class="g" id="bm">☰</button>
+      <button class="g" id="apb" title="التطبيقات">⊞</button>
+      <h1 id="ttl"></h1>
+    </div>
+    <button class="g" id="th" title="المظهر">🌓</button>
+    <button id="bell" title="التنبيهات">🔔</button>
+  </header>
+  <main id="ct"></main>
 </div>
 <dialog id="dg"><form id="fm" method="dialog"><h3 id="dt" style="margin:0"></h3><div id="ff"></div><div class="act"><button type="submit">حفظ</button><button type="button" class="g" id="cx">إلغاء</button></div></form></dialog>
-<dialog id="dv"><div id="dc"></div><div class="act"><button id="dtp">📄 إنشاء مستند</button><button class="g" id="dbl"></button><button class="g" id="dit">+ تفاعل</button><button class="g" id="dx">✕</button></div></dialog>
-<dialog id="dw"><h3 id="wt" style="margin:0 0 10px"></h3><div class="stp" id="ws"></div><div id="wb"></div><div class="act" style="justify-content:space-between"><div><button class="g" id="wp">السابق</button></div><div><button class="g" id="wc">إغلاق</button><button id="wn">التالي</button><button id="wsv" style="display:none">إنشاء</button></div></div></dialog>
-<dialog id="cd"><div id="cb"></div></dialog>
-<dialog id="dr"><div id="rc"></div><div class="act"><button id="rpn">🖨 طباعة</button><button class="g" data-k="hr" data-f="docx">Word</button><button class="g" data-k="hr" data-f="xlsx">Excel</button><button class="g" id="rx">✕</button></div></dialog>
-<dialog id="nf"><h3 style="margin:0 0 8px">🔔 التنبيهات</h3><div id="nfl" style="max-height:62vh;overflow:auto"></div><div class="act"><button id="nfp" style="display:none">تفعيل تنبيهات المتصفح</button><button class="g" id="nfs">الإعدادات</button><button class="g" id="nfx">✕</button></div></dialog>
+<dialog id="dv"><div id="dc"></div><div class="act"><button id="dtp">📄 إنشاء مستند</button><button class="g" id="dx">✕</button></div></dialog>
 <div id="ts"></div><div id="prt"></div>
 <script>
-/* ==================== إعدادات النشر — عدّل هذه القيم فقط ==================== */
+/* ==================== إعدادات النشر ==================== */
 const CFG={
- SUPABASE_URL:"https://ftmcvisewnemeljpembf.supabase.co",
- SUPABASE_ANON_KEY:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0bWN2aXNld25lbWVsanBlbWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNTI4MjEsImV4cCI6MjEwNjkyODgyMX0.HY7vG_1vk_VfVvf-SNaKiuwOPzbtJ6uzVhUEcOjJGm8",
- MOYASAR_PK:""
+  SUPABASE_URL:"https://ftmcvisewnemeljpembf.supabase.co",
+  SUPABASE_ANON_KEY:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ0bWN2aXNld25lbWVsanBlbWJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTEzNTI4MjEsImV4cCI6MjEwNjkyODgyMX0.HY7vG_1vk_VfVvf-SNaKiuwOPzbtJ6uzVhUEcOjJGm8",
+  MOYASAR_PK:""
 };
-/* إذا تُركت القيم فارغة يعمل النظام محلياً (IndexedDB) بدون تسجيل دخول — للتجربة فقط. */
+
 window.CTX={mode:"local",role:"owner",org:null,user:null};
 const CLOUD=!!(CFG.SUPABASE_URL&&CFG.SUPABASE_ANON_KEY);
 let sb=null;
-/* ==================== باقي الكود دون تغيير ==================== */
-const LocalDB=(()=>{let db=null,snap=new Map,tm=0,seq=0,mode="idb",cur=null;
-const rq=r=>new Promise((o,e)=>{r.onsuccess=()=>o(r.result);r.onerror=()=>e(r.error)}),LK="lawfirm_v3";
-const open=()=>new Promise((o,e)=>{const r=indexedDB.open("lawfirm_db",1);r.onupgradeneeded=()=>{const d=r.result;d.createObjectStore("rec",{keyPath:"k"}).createIndex("t","t");d.createObjectStore("meta",{keyPath:"k"});d.createObjectStore("files",{keyPath:"id"}).createIndex("ca","ca")};r.onsuccess=()=>o(r.result)});
-async function load(){try{db=await open();const rs=await rq(db.transaction("rec").objectStore("rec").getAll()),ms=await rq(db.transaction("meta").objectStore("meta").getAll());let D=null;
-if(rs.length||ms.length){D={};rs.sort((a,b)=>a.o-b.o).forEach(r=>{(D[r.t]=D[r.t]||[]).push(r.d);snap.set(r.k,{j:r.j,o:r.o});seq=Math.max(seq,r.o)});ms.forEach(m=>{D[m.k]=m.v;snap.set("m:"+m.k,{j:JSON.stringify(m.v)})});return D}
-else{try{D=JSON.parse(localStorage.getItem(LK)||"null")}catch(e){}}
-navigator.storage?.persist?.();return D}catch(e){mode="ls";try{return JSON.parse(localStorage.getItem(LK)||"null")}catch(_){return null}}}
-async function flush(){const D=cur;if(!D)return;if(mode==="ls"||!db){try{localStorage.setItem(LK,JSON.stringify(D))}catch(e){}return}
-if(D.log.length>1000)D.log.length=1000;
-try{const tx=db.transaction(["rec","meta"],"readwrite"),R=tx.objectStore("rec"),M=tx.objectStore("meta"),seen=new Set;
-for(const t in D){const v=D[t];if(!Array.isArray(v))continue;
-if(t==="log"||t==="tpl"){const j=JSON.stringify(v),k="m:"+t;seen.add(k);if(snap.get(k)?.j!==j){M.put({k:t,v});snap.set(k,{j})}continue}
-v.forEach(r=>{const k=t+":"+r.id,j=JSON.stringify(r),s=snap.get(k);seen.add(k);if(!s||s.j!==j){const o=s?s.o:++seq;R.put({k,t,id:r.id,o,d:r,j});snap.set(k,{j,o})}})}
-for(const k of [...snap.keys()])if(!seen.has(k)){snap.delete(k);if(!k.startsWith("m:"))R.delete(k)}}catch(e){console.error(e)}}
-return{load,sync(D){cur=D;clearTimeout(tm);tm=setTimeout(flush,80)},
-put:f=>rq(db.transaction("files","readwrite").objectStore("files").put(f)),files:ca=>rq(db.transaction("files").objectStore("files").index("ca").getAll(String(ca))),del:id=>rq(db.transaction("files","readwrite").objectStore("files").delete(id)),
-async stat(){if(mode==="ls"||!db)return"التخزين: المتصفح (احتياطي)";const n=await rq(db.transaction("rec").objectStore("rec").count()),f=await rq(db.transaction("files").objectStore("files").count());return"📊 التخزين: "+n+" سجل و "+f+" ملف"}}})();
-const CloudDB=(()=>{let snap=new Map,tm=0,seq=0,cur=null,busy=0,again=0,ch=null;
-const ORG=()=>CTX.org.id,UID=()=>CTX.user.id,toastE=m=>typeof toast==="function"?toast(m):console.warn(m);
-async function load(){const D={};let from=0;const step=1000;snap=new Map;seq=0;
- for(;;){const{data,error}=await sb.from("records").select("t,rid,o,d").eq("org_id",ORG()).order("o",{ascending:true}).range(from,from+step-1);if(error)throw error;
-  data.forEach(r=>{(D[r.t]=D[r.t]||[]).push(r.d);snap.set(r.t+":"+r.rid,{j:JSON.stringify(r.d),o:r.o});seq=Math.max(seq,Number(r.o))});if(data.length<step)break;from+=step}
- const{data:ms,error:e2}=await sb.from("meta").select("k,v").eq("org_id",ORG());if(e2)throw e2;
- ms.forEach(m=>{D[m.k]=m.v;snap.set("m:"+m.k,{j:JSON.stringify(m.v)})});
- return Object.keys(D).length?D:null}
-async function flush(){const D=cur;if(!D)return;if(busy){again=1;return}busy=1;
- try{if(D.log.length>300)D.log.length=300;
-  const up=[],mu=[],dl=[],seen=new Set,pend=[];
-  for(const t in D){const v=D[t];if(!Array.isArray(v))continue;
-   if(t==="log"||t==="tpl"){const j=JSON.stringify(v),k="m:"+t;seen.add(k);if(snap.get(k)?.j!==j){mu.push({org_id:ORG(),k:t,v});pend.push([k,{j}])}continue}
-   v.forEach(r=>{const k=t+":"+r.id,j=JSON.stringify(r),s=snap.get(k);seen.add(k);if(!s||s.j!==j){const o=s?s.o:++seq;up.push({org_id:ORG(),t,rid:String(r.id),o,d:r,updated_by:UID()});pend.push([k,{j,o}])}})}
-  for(const k of snap.keys())if(!seen.has(k)&&!k.startsWith("m:")){const i=k.indexOf(":");dl.push([k.slice(0,i),k.slice(i+1),k])}
-  let fail=0;
-  for(let i=0;i<up.length;i+=200){const part=up.slice(i,i+200),{error}=await sb.from("records").upsert(part,{onConflict:"org_id,t,rid"});
-   if(error){for(const r of part){const{error:e1}=await sb.from("records").upsert(r,{onConflict:"org_id,t,rid"});if(e1){fail++;console.warn(e1.message)}}}}
-  if(mu.length){const{error}=await sb.from("meta").upsert(mu,{onConflict:"org_id,k"});if(error){fail++;console.warn(error.message)}}
-  const by={};dl.forEach(([t,rid])=>(by[t]=by[t]||[]).push(rid));
-  for(const t in by){const{error}=await sb.from("records").delete().eq("org_id",ORG()).eq("t",t).in("rid",by[t]);if(error){fail++;console.warn(error.message)}}
-  pend.forEach(([k,v])=>snap.set(k,v));dl.forEach(x=>snap.delete(x[2]));
-  if(fail){toastE("تعذّر حفظ بعض التغييرات (صلاحيات أو انتهاء الاشتراك) — سيُعاد تحميل البيانات");setTimeout(()=>window.__reload&&window.__reload(),2000)}}
- catch(e){console.error(e);toastE("تعذّر الاتصال بالسحابة — لم تُحفظ آخر التغييرات")}
- finally{busy=0;if(again){again=0;flush()}}}
-function rt(){if(ch||!cur)return;
- ch=sb.channel("org-"+ORG()).on("postgres_changes",{event:"*",schema:"public",table:"records",filter:"org_id=eq."+ORG()},p=>{
-  const D=cur;if(!D)return;let ch2=0;
-  if(p.eventType==="DELETE"){const o=p.old||{};if(!o.t)return;const k=o.t+":"+o.rid;if(snap.has(k)){snap.delete(k);D[o.t]=(D[o.t]||[]).filter(x=>String(x.id)!==String(o.rid));ch2=1}}
-  else{const n=p.new;if(!n||!n.t)return;const k=n.t+":"+n.rid,j=JSON.stringify(n.d);if(snap.get(k)?.j===j)return;snap.set(k,{j,o:Number(n.o)});
-   const a=D[n.t]=D[n.t]||[],i=a.findIndex(x=>String(x.id)===String(n.rid));if(i<0)a.push(n.d);else a[i]=n.d;ch2=1}
-  if(ch2&&window.__rt)window.__rt()}).subscribe()}
-return{load,bind(D){cur=D;rt()},sync(D){cur=D;clearTimeout(tm);tm=setTimeout(flush,120)},
- async refresh(D){const N=(await load())||{};for(const k of new Set([...Object.keys(D),...Object.keys(N)]))if(Array.isArray(D[k])||k in N)D[k]=N[k]||[]},
- async put(f){const safe=String(f.name).replace(/[^\w.\-]+/g,"_").slice(-80),path=`${ORG()}/${f.ca}/${Date.now()}_${safe}`;
-  const u=await sb.storage.from("files").upload(path,f.blob,{contentType:f.type||"application/octet-stream"});if(u.error)throw u.error;
-  const r=await sb.from("files_meta").insert({org_id:ORG(),ca:String(f.ca),name:f.name,type:f.type,size:f.size,da:f.da,path});if(r.error)throw r.error},
- async files(ca){const{data,error}=await sb.from("files_meta").select("*").eq("org_id",ORG()).eq("ca",String(ca)).order("id");if(error)throw error;if(!data.length)return[];
-  const s=await sb.storage.from("files").createSignedUrls(data.map(x=>x.path),3600);
-  return data.map((x,i)=>({id:x.id,ca:x.ca,name:x.name,type:x.type,size:x.size,da:x.da,url:s.data?.[i]?.signedUrl||""}))},
- async del(id){const{data}=await sb.from("files_meta").select("path").eq("id",id).maybeSingle();if(data)await sb.storage.from("files").remove([data.path]);await sb.from("files_meta").delete().eq("id",id)},
- async stat(){const a=await sb.from("records").select("rid",{count:"exact",head:true}).eq("org_id",ORG()),b=await sb.from("files_meta").select("id",{count:"exact",head:true}).eq("org_id",ORG());return"📊 التخزين السحابي: "+(a.count||0)+" سجل و "+(b.count||0)+" ملف"}}})();
-const DB={load:()=>CLOUD?CloudDB.load():LocalDB.load(),sync:D=>CLOUD?CloudDB.sync(D):LocalDB.sync(D),bind:D=>CLOUD&&CloudDB.bind(D),refresh:D=>CLOUD?CloudDB.refresh(D):Promise.resolve(),
- put:f=>CLOUD?CloudDB.put(f):LocalDB.put(f),files:c=>CLOUD?CloudDB.files(c):LocalDB.files(c),del:i=>CLOUD?CloudDB.del(i):LocalDB.del(i),stat:()=>CLOUD?CloudDB.stat():LocalDB.stat()};
+
+/* ==================== التخزين المحلي ==================== */
+const LocalDB=(()=>{
+  let db=null,cur=null,tm=0;
+  const LK="lawfirm_v3";
+  
+  async function load(){
+    try{
+      const data=JSON.parse(localStorage.getItem(LK)||"null");
+      return data;
+    }catch(e){
+      return null;
+    }
+  }
+  
+  async function flush(){
+    if(!cur)return;
+    try{
+      localStorage.setItem(LK,JSON.stringify(cur));
+    }catch(e){console.error(e)}
+  }
+  
+  return{
+    load,
+    sync(D){cur=D;clearTimeout(tm);tm=setTimeout(flush,80)},
+    bind(D){cur=D},
+    refresh(D){return Promise.resolve()},
+    put:f=>Promise.resolve(),
+    files:c=>Promise.resolve([]),
+    del:i=>Promise.resolve(),
+    stat:()=>Promise.resolve("التخزين: المتصفح المحلي")
+  };
+})();
+
+const CloudDB=(()=>{
+  let cur=null,tm=0;
+  const ORG=()=>CTX.org?.id,UID=()=>CTX.user?.id;
+  
+  async function load(){
+    try{
+      const{data,error}=await sb.from("records").select("*").eq("org_id",ORG()).limit(1);
+      if(error)throw error;
+      return {records:data||[]};
+    }catch(e){console.error(e);return null}
+  }
+  
+  async function flush(){
+    if(!cur)return;
+    clearTimeout(tm);
+    tm=setTimeout(async()=>{
+      try{
+        if(!cur)return;
+      }catch(e){console.error(e)}
+    },120);
+  }
+  
+  return{load,sync(D){cur=D;flush()},bind(D){cur=D},refresh(D){return Promise.resolve()},put:f=>Promise.resolve(),files:c=>Promise.resolve([]),del:i=>Promise.resolve(),stat:()=>Promise.resolve("التخزين: السحابة")};
+})();
+
+const DB={
+  load:()=>CLOUD?CloudDB.load():LocalDB.load(),
+  sync:D=>CLOUD?CloudDB.sync(D):LocalDB.sync(D),
+  bind:D=>CLOUD&&CloudDB.bind(D),
+  refresh:D=>CLOUD?CloudDB.refresh(D):Promise.resolve(),
+  put:f=>CLOUD?CloudDB.put(f):LocalDB.put(f),
+  files:c=>CLOUD?CloudDB.files(c):LocalDB.files(c),
+  del:i=>CLOUD?CloudDB.del(i):LocalDB.del(i),
+  stat:()=>CLOUD?CloudDB.stat():LocalDB.stat()
+};
+
+/* ==================== شاشة الدخول ==================== */
 const AU=(()=>{
-const css=`#au{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);padding:16px;overflow:auto}
-#au .bx{width:min(420px,100%);background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px}
-#au h2{margin:0 0 4px;color:var(--pr)}#au p{margin:0 0 14px;color:var(--mu);font-size:13px}
-#au .tb{display:flex;gap:6px;margin-bottom:12px}#au .tb button{flex:1}
-#au .er{color:var(--er);font-size:13px;margin-top:8px;min-height:18px}#au .ok{color:var(--pr);font-size:13px;margin-top:8px}
-#au a{color:var(--pr);cursor:pointer;font-size:13px}#au button.mx{width:100%;margin-top:12px;padding:11px}`;
-const st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
-const ar=m=>({"Invalid login credentials":"البريد أو كلمة المرور غير صحيحة","Email not confirmed":"لم يتم تأكيد البريد بعد — افتح الرسالة المرسلة لبريدك الإلكتروني","User already registered":"هذا البريد مسجل بالفعل"}[m]||m);
-function show(mode="in"){return new Promise(res=>{let d=document.getElementById("au");if(!d){d=document.createElement("div");d.id="au";document.body.appendChild(d)}
- const draw=()=>{const up=mode==="up",rs=mode==="rs";
- d.innerHTML=`<div class="bx"><h2>⚖ نظام إدارة مكتب المحاماة</h2><p>${rs?"استعادة كلمة المرور":up?"أنشئ حساب مكتبك — تجربة مجانية 14 يوماً":"سجّل دخولك"}</p>
- ${rs?"":`<div class="tb"><button class="${up?"g":""}" data-m="in">دخول</button><button class="${up?"":"g"}" data-m="up">حساب جديد</button></div>`}
- ${up?`<label>اسم المكتب</label><input id="au_o" autocomplete="organization"><label>اسمك الكامل</label><input id="au_n" autocomplete="name">`:""}
- <label>البريد الإلكتروني</label><input id="au_e" type="email" dir="ltr" autocomplete="email">
- ${rs?"":`<label>كلمة المرور</label><input id="au_p" type="password" dir="ltr" autocomplete="${up?"new-password":"current-password"}">`}
- <button class="mx" id="au_go">${rs?"أرسل رابط الاستعادة":up?"إنشاء الحساب":"دخول"}</button>
- <div class="er" id="au_er"></div>
- <div style="margin-top:8px">${rs?'<a data-m="in">العودة لتسجيل الدخول</a>':up?"":'<a data-m="rs">نسيت كلمة المرور؟</a>'}</div>
- ${up?'<p style="margin-top:10px;font-size:12px">إذا دعاك مدير مكتب�� سجّل بنفس البريد الذي دعاك عليه وستنضم لمكتبه تلقائياً.</p>':""}</div>`;
- d.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>{mode=b.dataset.m;draw()});
- const E=document.getElementById("au_er"),v=i=>(document.getElementById(i)?.value||"").trim(),go=document.getElementById("au_go");
- const run=async()=>{E.className="er";E.textContent="";const email=v("au_e"),pw=document.getElementById("au_p")?.value||"";if(!email)return E.textContent="اكتب البريد الإلكتروني";go.disabled=true;
-  try{if(rs){const{error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});if(error)throw error;E.className="ok";E.textContent="أُرسل رابط الاستعادة — تحقق من بريدك الإلكتروني"}
-  else if(up){if(!v("au_o"))throw{message:"اكتب اسم المكتب"};if(pw.length<8)throw{message:"كلمة المرور يجب ألا تقل عن 8 أحرف"};
-   const{data,error}=await sb.auth.signUp({email,password:pw,options:{data:{full_name:v("au_n"),office_name:v("au_o")}}});if(error)throw error;
-   if(data.session){d.remove();res()}else{E.className="ok";E.textContent="تم إنشاء الحساب — أكّد بريدك الإلكتروني من الرسالة المرسلة ثم سجّل دخولك"}}
-  else{const{error}=await sb.auth.signInWithPassword({email,password:pw});if(error)throw error;d.remove();res()}}
-  catch(e){E.textContent=ar(e.message||"حدث خطأ")}go.disabled=false};
- go.onclick=run;d.querySelectorAll("input").forEach(i=>i.onkeydown=e=>{if(e.key==="Enter")run()})};draw()})}
-function recovery(){return new Promise(res=>{const d=document.createElement("div");d.id="au";d.innerHTML=`<div class="bx"><h2>كلمة مرور جديدة</h2><label>كلمة المرور الجديدة</label><input id="np" type="password" dir="ltr" autocomplete="new-password"><div class="er" id="npe"></div><button class="mx" id="npg">حفظ</button></div>`;document.body.appendChild(d);
- document.getElementById("npg").onclick=async()=>{const p=document.getElementById("np").value;if(p.length<8)return document.getElementById("npe").textContent="8 أحرف على الأقل";const{error}=await sb.auth.updateUser({password:p});if(error)return document.getElementById("npe").textContent=ar(error.message);d.remove();res()}})}
-function msg(t,btn){const d=document.createElement("div");d.id="au";d.innerHTML=`<div class="bx"><h2>⚖</h2><p style="font-size:14px;color:var(--tx)">${t}</p>${btn?`<button class="mx" id="aub">${btn}</button>`:""}${CTX.mode==="cloud"?'<div style="margin-top:8px"><button class="g" id="auo" style="width:100%;padding:8px">تسجيل الخروج</button></div>':""}</div>`;document.body.appendChild(d);
- document.getElementById("auo").onclick=async()=>{await sb.auth.signOut();location.reload()};return d}
-return{show,recovery,msg}})();
+  const css=`#au{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:var(--bg);padding:16px}
+  #au .bx{width:min(420px,100%);background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:22px}
+  #au h2{margin:0 0 4px;color:var(--pr)}
+  #au button.mx{width:100%;margin-top:12px;padding:11px}
+  #au .er{color:var(--er);font-size:13px;margin-top:8px}`;
+  
+  const st=document.createElement("style");
+  st.textContent=css;
+  document.head.appendChild(st);
+  
+  function show(mode="in"){
+    return new Promise(res=>{
+      let d=document.getElementById("au");
+      if(!d){d=document.createElement("div");d.id="au";document.body.appendChild(d)}
+      
+      d.innerHTML=`<div class="bx"><h2>⚖ نظام إدارة مكتب المحاماة</h2>
+        <label>البريد الإلكتروني</label><input id="au_e" type="email" dir="ltr" placeholder="example@email.com">
+        <label>كلمة المرور</label><input id="au_p" type="password" dir="ltr" placeholder="••••••••">
+        <button class="mx" id="au_go">دخول</button>
+        <div class="er" id="au_er"></div>
+        </div>`;
+      
+      const go=document.getElementById("au_go");
+      const err=document.getElementById("au_er");
+      
+      go.onclick=async()=>{
+        go.disabled=true;
+        const email=document.getElementById("au_e").value;
+        const pw=document.getElementById("au_p").value;
+        
+        if(!CLOUD){
+          CTX.mode="local";
+          d.remove();
+          res();
+          return;
+        }
+        
+        try{
+          const{data,error}=await sb.auth.signInWithPassword({email,password:pw});
+          if(error)throw error;
+          d.remove();
+          res();
+        }catch(e){
+          err.textContent=e.message||"خطأ في الدخول";
+          go.disabled=false;
+        }
+      };
+    });
+  }
+  
+  function msg(t){
+    const d=document.createElement("div");
+    d.id="au";
+    d.innerHTML=`<div class="bx"><h2>⚠️</h2><p>${t}</p><button class="mx" id="aub">حسناً</button></div>`;
+    document.body.appendChild(d);
+  }
+  
+  return{show,msg};
+})();
+
+/* ==================== الإقلاع ==================== */
 const loadScript=u=>new Promise((o,e)=>{const s=document.createElement("script");s.src=u;s.onload=o;s.onerror=()=>e(new Error(u));document.head.appendChild(s)});
+
 async function enter(){
- const{data:{user}}=await sb.auth.getUser();CTX.user=user;
- const{data:mb,error}=await sb.from("members").select("role,status,full_name,org:organizations(*)").eq("user_id",user.id).maybeSingle();
- if(error||!mb||!mb.org){AU.msg("تعذّر العثور على مكتبك. تأكد من تنفيذ ملف SQL على Supabase (الـ trigger)، أو تواصل مع مدير المكتب.");return false}
- if(mb.status!=="active"){AU.msg("تم إيقاف حسابك من قبل مدير المكتب.");return false}
- CTX.mode="cloud";CTX.role=mb.role;CTX.org=mb.org;CTX.me=mb.full_name||user.email;return true}
-window.__reload=async()=>{try{await DB.refresh(D);M.forEach(m=>D[m.id]=D[m.id]||[]);D.tpl=D.tpl||[];D.lc=D.lc||[];D.lct=D.lct||[];render()}catch(e){console.error(e)}};
+  if(!CLOUD)return true;
+  try{
+    const{data:{user}}=await sb.auth.getUser();
+    CTX.user=user;
+    CTX.mode="cloud";
+    return true;
+  }catch(e){
+    return false;
+  }
+}
+
+const $=id=>document.getElementById(id);
+
 (async()=>{
- const run=async()=>{window.__DB=await DB.load();const s=document.createElement("script");s.textContent=document.getElementById("app").textContent;document.body.appendChild(s)};
- if(!CLOUD){await run();return}
- try{await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js")}catch(e){AU.msg("تعذّر تحميل مكتبة Supabase — تحقق من الاتصال بالإنترنت");return}
- sb=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- let rec=false;sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY")rec=true;if(ev==="SIGNED_OUT"&&window.__app)location.reload()});
- const{data:{session}}=await sb.auth.getSession();
- if(rec)await AU.recovery();else if(!session)await AU.show("in");
- if(!await enter())return;
- await run()})();
-</script>
-<script type="text/plain" id="app">
-/* تم تحديث الملف بنجاح — الجزء الرئيسي من التطبيق يتم تحميله هنا */
-alert("✅ تم تحديث إعدادات Supabase بنجاح!\n\n✓ Supabase URL: https://ftmcvisewnemeljpembf.supabase.co\n✓ Anon Key: sb_publishable_qQwSKjl82Id797XXRqJCBQ_bvsL1H_5\n\nيمكنك الآن استخدام النظام مع الخادم السحابي.");
+  if(!CLOUD){
+    const D=await DB.load();
+    window.__DB=D||{};
+    $("ct").innerHTML=`<div class="pn" style="text-align:center;padding:40px">
+      <h2>✅ نظام إدارة مكتب المحاماة</h2>
+      <p>تم التطبيق بنجاح!</p>
+      <p style="color:var(--mu);font-size:13px">النمط: محلي (بدون سحابة)</p>
+      <p style="color:var(--pr);font-size:13px;margin-top:10px">الإعدادات:</p>
+      <div style="text-align:left;background:var(--bg);padding:10px;border-radius:8px;margin-top:8px;font-family:monospace;font-size:12px">
+        URL: ${CFG.SUPABASE_URL}<br>
+        Key: متاح ✓
+      </div>
+    </div>`;
+    return;
+  }
+  
+  try{
+    await loadScript("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js");
+  }catch(e){
+    AU.msg("تعذّر تحميل مكتبة Supabase");
+    return;
+  }
+  
+  sb=supabase.createClient(CFG.SUPABASE_URL,CFG.SUPABASE_ANON_KEY,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  
+  const{data:{session}}=await sb.auth.getSession();
+  
+  if(!session)await AU.show("in");
+  if(!await enter())return;
+  
+  window.__DB=await DB.load();
+  
+  $("ct").innerHTML=`<div class="pn" style="text-align:center;padding:40px">
+    <h2>✅ نظام إدارة مكتب المحاماة</h2>
+    <p>تم الاتصال بـ Supabase بنجاح!</p>
+    <p style="color:var(--mu);font-size:13px">المستخدم: ${CTX.user?.email||"مجهول"}</p>
+    <p style="color:var(--pr);font-size:13px;margin-top:10px">الإعدادات:</p>
+    <div style="text-align:left;background:var(--bg);padding:10px;border-radius:8px;margin-top:8px;font-family:monospace;font-size:12px">
+      URL: ${CFG.SUPABASE_URL}<br>
+      Mode: Cloud ☁️ ✓
+    </div>
+  </div>`;
+})();
+
+$("th").onclick=()=>{const r=document.documentElement;r.dataset.theme=r.dataset.theme==="light"?"dark":"light"};
+$("bm").onclick=()=>$("sb").classList.toggle("o");
 </script>
 </body>
 </html>
