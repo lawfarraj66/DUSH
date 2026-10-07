@@ -1,62 +1,171 @@
--- يتطلب تنفيذ supabase_schema.sql أولاً. ملحق لقاعدة بياناتك الحالية (لا يعيد إنشاء شيء): نفّذه مرة واحدة في Supabase ← SQL Editor
--- يفرض على الخادم: صلاحيات العقود، قفل المعمّد، منع الحذف، والأرقام المتسلسلة بلا تكرار.
+-- ==========================================================
+-- FINAL SAFE CONTRACT PATCH FOR LAW FIRM APP
+-- ==========================================================
+-- Run this AFTER schema file
+-- Safe to rerun multiple times
+-- ==========================================================
 
--- 1) لا حاجة لدالة جديدة: نستعمل perm_level(org,'lc') و has_conf(org) الموجودتين في supabase_schema.sql
+BEGIN;
 
--- 2) عدّاد أرقام العقود (ذرّي، لكل مكتب وسنة)
-create table if not exists contract_counters(org_id uuid, yr int, n int not null default 0, primary key(org_id,yr));
-alter table contract_counters enable row level security;   -- بلا سياسات: الوصول عبر الدالة فقط
+CREATE TABLE IF NOT EXISTS contract_counters (
+  org_id uuid NOT NULL,
+  yr int NOT NULL,
+  n int NOT NULL DEFAULT 0,
+  PRIMARY KEY (org_id, yr)
+);
 
-insert into contract_counters(org_id,yr,n)
-select org_id, substring(d->>'no' from 'ع-(\d{4})-')::int, max(substring(d->>'no' from '-(\d+)$')::int)
-from records where t='lc' and d->>'no' ~ '^ع-\d{4}-\d+$' group by 1,2
-on conflict (org_id,yr) do update set n=greatest(contract_counters.n,excluded.n);
+ALTER TABLE contract_counters ENABLE ROW LEVEL SECURITY;
 
-create or replace function next_contract_no(p_org uuid, p_year int default extract(year from now())::int)
-returns text language plpgsql security definer set search_path=public as $$
-declare v int;
-begin
-  if coalesce(perm_level(p_org,'lc'),0) < 2 or not org_active(p_org) then raise exception 'لا تملك صلاحية إنشاء العقود'; end if;
-  insert into contract_counters(org_id,yr,n) values(p_org,p_year,1)
-    on conflict (org_id,yr) do update set n=contract_counters.n+1 returning n into v;
-  return 'ع-'||p_year||'-'||lpad(v::text,4,'0');
-end $$;
-revoke all on function next_contract_no(uuid,int) from public;
-grant execute on function next_contract_no(uuid,int) to authenticated;
+INSERT INTO contract_counters(org_id, yr, n)
+SELECT
+  r.org_id,
+  (regexp_match(r.d->>'no', '^ع-([0-9]{4})-[0-9]+$'))[1]::int AS yr,
+  max((regexp_match(r.d->>'no', '^ع-[0-9]{4}-([0-9]+)$'))[1]::int) AS max_num
+FROM records r
+WHERE r.t = 'lc'
+  AND r.d->>'no' ~ '^ع-[0-9]{4}-[0-9]+$'
+GROUP BY r.org_id, (regexp_match(r.d->>'no', '^ع-([0-9]{4})-[0-9]+$'))[1]::int
+ON CONFLICT (org_id, yr)
+DO UPDATE SET n = greatest(contract_counters.n, excluded.n);
 
--- 3) منع تكرار رقم العقد داخل المكتب (إن فشل التنفيذ فهناك أرقام مكررة قديمة: عالجها يدوياً أولاً)
-create unique index if not exists lc_no_uq on records(org_id,(d->>'no')) where t='lc' and d->>'no' is not null;
+CREATE OR REPLACE FUNCTION next_contract_no(p_org uuid, p_year int DEFAULT extract(year from now())::int)
+RETURNS text
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  v int;
+BEGIN
+  IF coalesce(perm_level(p_org, 'lc'), 0) < 2 THEN
+    RAISE EXCEPTION 'لا تملك صلاحية إنشاء العقود';
+  END IF;
 
--- 4) حارس العقود على مستوى الخادم
-create or replace function lc_guard() returns trigger language plpgsql security definer set search_path=public as $$
-declare org uuid := coalesce(new.org_id,old.org_id); lv int; cf boolean; o jsonb; n jsonb; oa text; na text;
-begin
-  if auth.uid() is null then return coalesce(new,old); end if;           -- خدمات الخادم الموثوقة
-  if coalesce(new.t,old.t) not in ('lc','lct') then return coalesce(new,old); end if;
-  lv:=coalesce(perm_level(org,'lc'),0); cf:=has_conf(org);
-  if tg_op='DELETE' then
-    if lv<3 then raise exception 'لا تملك صلاحية حذف العقود'; end if;
-    if old.t='lc' and (old.d#>>'{approval,status}')='معتمد' then raise exception 'لا يُحذف عقد معتمد — ألغِه بدلاً من ذلك'; end if;
-    return old;
-  end if;
-  if lv<2 then raise exception 'لا تملك صلاحية تعديل العقود'; end if;
-  if new.t<>'lc' then return new; end if;
-  -- الصف السابق (الـ upsert يمر أولاً بـ INSERT حتى لو كان الصف موجوداً)
-  if tg_op='UPDATE' then o:=old.d; else
-    select d into o from records where org_id=new.org_id and t=new.t and rid=new.rid; end if;
-  o:=coalesce(o,'{}'::jsonb); n:=new.d;
-  oa:=o#>>'{approval,status}'; na:=n#>>'{approval,status}';
-  if o->>'no' is not null and (o->>'no') is distinct from (n->>'no') then raise exception 'رقم العقد لا يتغير'; end if;
-  if na='معتمد' and coalesce(oa,'')<>'معتمد' and not cf then raise exception 'التعميد للمخوّلين فقط'; end if;
-  if oa='معتمد' then
-    if na='معتمد' then
-      if (o-array['sig','st','ca'])<>(n-array['sig','st','ca']) then raise exception 'العقد معمّد ومقفل للتعديل — اطلب إعادة فتحه'; end if;
-    elsif not cf then raise exception 'إعادة فتح العقد المعمّد للمخوّلين فقط'; end if;
-  end if;
-  if (n->'sig'->'l') is not null and (o->'sig'->'l') is distinct from (n->'sig'->'l') and not cf then
-    raise exception 'توقيع المكتب للمخوّلين فقط'; end if;
-  if coalesce(o->>'st','')<>'ملغي' and n->>'st'='ملغي' and not cf then raise exception 'إلغاء العقد للمخوّلين فقط'; end if;
-  return new;
-end $$;
-drop trigger if exists lc_guard_trg on records;
-create trigger lc_guard_trg before insert or update or delete on records for each row execute function lc_guard();
+  IF NOT org_active(p_org) THEN
+    RAISE EXCEPTION 'المكتب غير نشط';
+  END IF;
+
+  INSERT INTO contract_counters(org_id, yr, n)
+  VALUES (p_org, p_year, 1)
+  ON CONFLICT (org_id, yr)
+  DO UPDATE SET n = contract_counters.n + 1
+  RETURNING n INTO v;
+
+  RETURN 'ع-' || p_year || '-' || lpad(v::text, 4, '0');
+END;
+$$;
+
+REVOKE ALL ON FUNCTION next_contract_no(uuid, int) FROM public;
+GRANT EXECUTE ON FUNCTION next_contract_no(uuid, int) TO authenticated;
+
+CREATE UNIQUE INDEX IF NOT EXISTS lc_no_uq
+ON records(org_id, (d->>'no'))
+WHERE t = 'lc' AND d->>'no' IS NOT NULL;
+
+CREATE OR REPLACE FUNCTION lc_guard()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+  org_id_val uuid := coalesce(new.org_id, old.org_id);
+  lv int;
+  cf boolean;
+  old_d jsonb;
+  new_d jsonb;
+  old_app text;
+  new_app text;
+BEGIN
+  IF auth.uid() IS NULL THEN
+    RETURN coalesce(new, old);
+  END IF;
+
+  IF coalesce(new.t, old.t) NOT IN ('lc', 'lct') THEN
+    RETURN coalesce(new, old);
+  END IF;
+
+  lv := coalesce(perm_level(org_id_val, 'lc'), 0);
+  cf := has_conf(org_id_val);
+
+  IF tg_op = 'DELETE' THEN
+    IF lv < 3 THEN
+      RAISE EXCEPTION 'لا تملك صلاحية حذف العقود';
+    END IF;
+
+    IF old.t = 'lc' AND coalesce(old.d#>>'{approval,status}', '') = 'معتمد' THEN
+      RAISE EXCEPTION 'لا يُحذف عقد معتمد — ألغِه بدلاً من ذلك';
+    END IF;
+
+    RETURN old;
+  END IF;
+
+  IF lv < 2 THEN
+    RAISE EXCEPTION 'لا تملك صلاحية تعديل العقود';
+  END IF;
+
+  IF new.t <> 'lc' THEN
+    RETURN new;
+  END IF;
+
+  IF tg_op = 'UPDATE' THEN
+    old_d := coalesce(old.d, '{}'::jsonb);
+  ELSE
+    SELECT d INTO old_d
+    FROM records
+    WHERE org_id = new.org_id
+      AND t = new.t
+      AND rid = new.rid;
+  END IF;
+
+  old_d := coalesce(old_d, '{}'::jsonb);
+  new_d := new.d;
+
+  old_app := old_d#>>'{approval,status}';
+  new_app := new_d#>>'{approval,status}';
+
+  IF (old_d->>'no') IS NOT NULL AND (old_d->>'no') IS DISTINCT FROM (new_d->>'no') THEN
+    RAISE EXCEPTION 'رقم العقد لا يتغير';
+  END IF;
+
+  IF new_app = 'معتمد' AND coalesce(old_app, '') <> 'معتمد' AND NOT cf THEN
+    RAISE EXCEPTION 'التعميد للمخوّلين فقط';
+  END IF;
+
+  IF coalesce(old_app, '') = 'معتمد' THEN
+    IF new_app = 'معتمد' THEN
+      IF old_d->'sig' IS DISTINCT FROM new_d->'sig'
+        OR old_d->'st' IS DISTINCT FROM new_d->'st'
+        OR old_d->'ca' IS DISTINCT FROM new_d->'ca'
+      THEN
+        RAISE EXCEPTION 'العقد معمّد ومقفل للتعديل — اطلب إعادة فتحه';
+      END IF;
+    ELSIF NOT cf THEN
+      RAISE EXCEPTION 'إعادة فتح العقد المعمّد للمخوّلين فقط';
+    END IF;
+  END IF;
+
+  IF (new_d->'sig'->'l') IS NOT NULL
+     AND (old_d->'sig'->'l') IS DISTINCT FROM (new_d->'sig'->'l')
+     AND NOT cf THEN
+    RAISE EXCEPTION 'توقيع المكتب للمخوّلين فقط';
+  END IF;
+
+  IF coalesce(old_d->>'st', '') <> 'ملغي'
+     AND new_d->>'st' = 'ملغي'
+     AND NOT cf
+  THEN
+    RAISE EXCEPTION 'إلغاء العقد للمخوّلين فقط';
+  END IF;
+
+  RETURN new;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS lc_guard_trg ON records;
+CREATE TRIGGER lc_guard_trg
+BEFORE INSERT OR UPDATE OF d OR DELETE ON records
+FOR EACH ROW
+EXECUTE FUNCTION lc_guard();
+
+COMMIT;
